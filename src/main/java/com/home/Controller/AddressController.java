@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.home.Entity.Branches;
-import com.home.Service.BranchesService;
+import com.home.Entity.Address;
+import com.home.Service.AddressService;
 @RestController
-@RequestMapping(value="/rest/branch")
-public class BranchesController {
+@RequestMapping(value="/rest/address")
+public class AddressController {
 	
 	@Autowired
-	BranchesService branchesService;
+	AddressService branchesService;
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String add(@RequestBody Branches branches) {
-		if (branchesService.save(branches)) {
+	public String add(@RequestBody Address address) {
+		if (branchesService.save(address)) {
 			return "Done";
 		} else {
 			return "Fail";

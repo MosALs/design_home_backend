@@ -23,8 +23,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  *
  * @author goher
@@ -53,9 +51,8 @@ public class Specialization implements Serializable {
     @Size(max = 50)
     @Column(length = 50)
     private String description;
-   
     @OneToMany(mappedBy = "specializationId", fetch = FetchType.LAZY)
-    private List<Users> usersList;
+    private List<AppUser> appUserList;
 
     public Specialization() {
     }
@@ -94,12 +91,12 @@ public class Specialization implements Serializable {
     }
 
     @XmlTransient
-    public List<Users> getUsersList() {
-        return usersList;
+    public List<AppUser> getAppUserList() {
+        return appUserList;
     }
 
-    public void setUsersList(List<Users> usersList) {
-        this.usersList = usersList;
+    public void setAppUserList(List<AppUser> appUserList) {
+        this.appUserList = appUserList;
     }
 
     @Override

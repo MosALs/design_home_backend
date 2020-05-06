@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author goher
@@ -29,10 +31,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(catalog = "kmg", schema = "dbo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Branches.findAll", query = "SELECT b FROM Branches b")
-    , @NamedQuery(name = "Branches.findById", query = "SELECT b FROM Branches b WHERE b.id = :id")
-    , @NamedQuery(name = "Branches.findByAddresName", query = "SELECT b FROM Branches b WHERE b.addresName = :addresName")})
-public class Branches implements Serializable {
+    @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")
+    , @NamedQuery(name = "Address.findById", query = "SELECT a FROM Address a WHERE a.id = :id")
+    , @NamedQuery(name = "Address.findByAddresName", query = "SELECT a FROM Address a WHERE a.addresName = :addresName")})
+public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,17 +45,18 @@ public class Branches implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "addres_name", length = 2147483647)
     private String addresName;
+  
+    @JoinColumn(name = "appuser_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private AppUser appuserId;
     @JoinColumn(name = "area_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Areas areaId;
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Users userId;
 
-    public Branches() {
+    public Address() {
     }
 
-    public Branches(Integer id) {
+    public Address(Integer id) {
         this.id = id;
     }
 
@@ -73,20 +76,20 @@ public class Branches implements Serializable {
         this.addresName = addresName;
     }
 
+    public AppUser getAppuserId() {
+        return appuserId;
+    }
+
+    public void setAppuserId(AppUser appuserId) {
+        this.appuserId = appuserId;
+    }
+
     public Areas getAreaId() {
         return areaId;
     }
 
     public void setAreaId(Areas areaId) {
         this.areaId = areaId;
-    }
-
-    public Users getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Users userId) {
-        this.userId = userId;
     }
 
     @Override
@@ -99,10 +102,10 @@ public class Branches implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Branches)) {
+        if (!(object instanceof Address)) {
             return false;
         }
-        Branches other = (Branches) object;
+        Address other = (Address) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +114,7 @@ public class Branches implements Serializable {
 
     @Override
     public String toString() {
-        return "com.home.Entity.Branches[ id=" + id + " ]";
+        return "com.home.Entity.Address[ id=" + id + " ]";
     }
     
 }

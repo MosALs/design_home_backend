@@ -6,7 +6,6 @@
 package com.home.Entity;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -35,23 +34,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author goher
  */
 @Entity
-@Table(catalog = "kmg", schema = "dbo")
+@Table(name = "app_user", catalog = "kmg", schema = "dbo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")
-    , @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id")
-    , @NamedQuery(name = "Users.findByUserName", query = "SELECT u FROM Users u WHERE u.userName = :userName")
-    , @NamedQuery(name = "Users.findByUserMobile", query = "SELECT u FROM Users u WHERE u.userMobile = :userMobile")
-    , @NamedQuery(name = "Users.findByUserHours", query = "SELECT u FROM Users u WHERE u.userHours = :userHours")
-    , @NamedQuery(name = "Users.findByUserGender", query = "SELECT u FROM Users u WHERE u.userGender = :userGender")
-    , @NamedQuery(name = "Users.findByAccountType", query = "SELECT u FROM Users u WHERE u.accountType = :accountType")
-    , @NamedQuery(name = "Users.findByTradeName", query = "SELECT u FROM Users u WHERE u.tradeName = :tradeName")
-    , @NamedQuery(name = "Users.findByTradeMobileNumber", query = "SELECT u FROM Users u WHERE u.tradeMobileNumber = :tradeMobileNumber")
-    , @NamedQuery(name = "Users.findByWholesaleretailsale", query = "SELECT u FROM Users u WHERE u.wholesaleretailsale = :wholesaleretailsale")
-    , @NamedQuery(name = "Users.findByDeliveryNoDelivery", query = "SELECT u FROM Users u WHERE u.deliveryNoDelivery = :deliveryNoDelivery")
-    , @NamedQuery(name = "Users.findByHyperLink", query = "SELECT u FROM Users u WHERE u.hyperLink = :hyperLink")
-    , @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
-public class Users implements Serializable {
+    @NamedQuery(name = "AppUser.findAll", query = "SELECT a FROM AppUser a")
+    , @NamedQuery(name = "AppUser.findById", query = "SELECT a FROM AppUser a WHERE a.id = :id")
+    , @NamedQuery(name = "AppUser.findByName", query = "SELECT a FROM AppUser a WHERE a.name = :name")
+    , @NamedQuery(name = "AppUser.findByUserName", query = "SELECT a FROM AppUser a WHERE a.userName = :userName")
+    , @NamedQuery(name = "AppUser.findByUserMobile", query = "SELECT a FROM AppUser a WHERE a.userMobile = :userMobile")
+    , @NamedQuery(name = "AppUser.findByUserHours", query = "SELECT a FROM AppUser a WHERE a.userHours = :userHours")
+    , @NamedQuery(name = "AppUser.findByUserGender", query = "SELECT a FROM AppUser a WHERE a.userGender = :userGender")
+    , @NamedQuery(name = "AppUser.findByAccountType", query = "SELECT a FROM AppUser a WHERE a.accountType = :accountType")
+    , @NamedQuery(name = "AppUser.findByTradeName", query = "SELECT a FROM AppUser a WHERE a.tradeName = :tradeName")
+    , @NamedQuery(name = "AppUser.findByTradeMobileNumber", query = "SELECT a FROM AppUser a WHERE a.tradeMobileNumber = :tradeMobileNumber")
+    , @NamedQuery(name = "AppUser.findByWholesaleretailsale", query = "SELECT a FROM AppUser a WHERE a.wholesaleretailsale = :wholesaleretailsale")
+    , @NamedQuery(name = "AppUser.findByDeliveryNoDelivery", query = "SELECT a FROM AppUser a WHERE a.deliveryNoDelivery = :deliveryNoDelivery")
+    , @NamedQuery(name = "AppUser.findByHyperLink", query = "SELECT a FROM AppUser a WHERE a.hyperLink = :hyperLink")
+    , @NamedQuery(name = "AppUser.findByPassword", query = "SELECT a FROM AppUser a WHERE a.password = :password")})
+public class AppUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,15 +59,13 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
-    @Basic(optional = false)
-    @Size(min = 1, max = 50)
-    @Column(name = "user_name", nullable = false, length = 50)
-    private String userName;
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "name", nullable = false, length = 50)
+    @Size(max = 50)
+    @Column(name="name" ,length = 50)
     private String name;
-	@Basic(optional = false)
+    @Size(max = 50)
+    @Column(name = "user_name", length = 50)
+    private String userName;
+    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "user_mobile", nullable = false, length = 20)
@@ -107,23 +105,23 @@ public class Users implements Serializable {
     @Column(nullable = false, length = 50)
     private String password;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId", fetch = FetchType.LAZY)
-    private List<Branches> branchesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appuserId", fetch = FetchType.LAZY)
+    private List<Address> addressList;
     @JsonIgnore
     @JoinColumn(name = "specialization_id", referencedColumnName = "id")
+    
     @ManyToOne(fetch = FetchType.LAZY)
     private Specialization specializationId;
 
-    public Users() {
+    public AppUser() {
     }
 
-    public Users(Integer id) {
+    public AppUser(Integer id) {
         this.id = id;
     }
 
-    public Users(Integer id, String userName, String userMobile, String accountType, String password) {
+    public AppUser(Integer id, String userMobile, String accountType, String password) {
         this.id = id;
-        this.userName = userName;
         this.userMobile = userMobile;
         this.accountType = accountType;
         this.password = password;
@@ -137,6 +135,14 @@ public class Users implements Serializable {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -144,13 +150,6 @@ public class Users implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    public String getName() {
- 		return name;
- 	}
-
- 	public void setName(String name) {
- 		this.name = name;
- 	}
 
     public String getUserMobile() {
         return userMobile;
@@ -241,12 +240,12 @@ public class Users implements Serializable {
     }
 
     @XmlTransient
-    public List<Branches> getBranchesList() {
-        return branchesList;
+    public List<Address> getAddressList() {
+        return addressList;
     }
 
-    public void setBranchesList(List<Branches> branchesList) {
-        this.branchesList = branchesList;
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
     }
 
     public Specialization getSpecializationId() {
@@ -267,10 +266,10 @@ public class Users implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Users)) {
+        if (!(object instanceof AppUser)) {
             return false;
         }
-        Users other = (Users) object;
+        AppUser other = (AppUser) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -278,15 +277,8 @@ public class Users implements Serializable {
     }
 
     @Override
-	public String toString() {
-		return "Users [id=" + id + ", userName=" + userName + ", name=" + name + ", userMobile=" + userMobile
-				+ ", userImage=" + Arrays.toString(userImage) + ", userHours=" + userHours + ", userGender="
-				+ userGender + ", accountType=" + accountType + ", tradeName=" + tradeName + ", tradeMobileNumber="
-				+ tradeMobileNumber + ", wholesaleretailsale=" + wholesaleretailsale + ", deliveryNoDelivery="
-				+ deliveryNoDelivery + ", hyperLink=" + hyperLink + ", password=" + password + ", branchesList="
-				+ branchesList + ", specializationId=" + specializationId + "]";
-	}
-    
-    
+    public String toString() {
+        return "com.home.Entity.AppUser[ id=" + id + " ]";
+    }
     
 }

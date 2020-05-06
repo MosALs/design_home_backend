@@ -8,8 +8,8 @@
     <class>com.home.Entity.Areas</class>
     <class>com.home.Entity.Sysdiagrams</class>
     <class>com.home.Entity.Countries</class>
-    <class>com.home.Entity.Branches</class>
-    <class>com.home.Entity.Users</class>
+    <class>com.home.Entity.Address</class>
+    <class>com.home.Entity.AppUser</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://;databaseName=kmg"/>

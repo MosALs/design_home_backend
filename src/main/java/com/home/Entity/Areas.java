@@ -26,8 +26,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  *
  * @author goher
@@ -52,12 +50,11 @@ public class Areas implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "area_name", nullable = false, length = 50)
     private String areaName;
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId", fetch = FetchType.LAZY)
+    private List<Address> addressList;
     @JoinColumn(name = "governorate_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Governorates governorateId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId", fetch = FetchType.LAZY)
-    private List<Branches> branchesList;
 
     public Areas() {
     }
@@ -87,21 +84,21 @@ public class Areas implements Serializable {
         this.areaName = areaName;
     }
 
+    @XmlTransient
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+    }
+
     public Governorates getGovernorateId() {
         return governorateId;
     }
 
     public void setGovernorateId(Governorates governorateId) {
         this.governorateId = governorateId;
-    }
-
-    @XmlTransient
-    public List<Branches> getBranchesList() {
-        return branchesList;
-    }
-
-    public void setBranchesList(List<Branches> branchesList) {
-        this.branchesList = branchesList;
     }
 
     @Override

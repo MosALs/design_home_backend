@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.home.DTO.UserRegisterationDto;
-import com.home.Entity.Users;
-import com.home.Service.UsersService;
+import com.home.Entity.AppUser;
+import com.home.Service.AppUserService;
 
 @RestController
 @RequestMapping(value="/rest/user")
-public class UserController {
+public class AppUserController {
 	
 	
 	//localhost:8080/rest/uset/login?userData=bbb&password=123&&userMobile=123456
 	
 	@Autowired
-    private	UsersService usersService; 
+    private	AppUserService usersService; 
 
 	@GetMapping(value="/login")
 	public ResponseEntity<?> login(@RequestParam("userData") String userData,@RequestParam("password")String password) {
