@@ -5,17 +5,25 @@ import com.home.Entity.Specialization;
 
 public class SearchCriteriaDto {
 	
-	public String user_name;
+	private String user_name;
 
-	public String account_Type;
+	private String account_Type;
 
-	public String user_Mobile;
-	public AppUser appUser;
-
-	
+	private String user_Mobile;
+	private AppUser appUser;
 
 	
+	private String specializationName;
 	
+	
+	
+	public String getSpecializationName() {
+		return specializationName;
+	}
+
+	public void setSpecializationName(String specializationName) {
+		this.specializationName = specializationName;
+	}
 
 	public AppUser getAppUser() {
 		return appUser;

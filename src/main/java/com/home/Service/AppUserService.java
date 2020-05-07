@@ -1,6 +1,5 @@
 package com.home.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public interface AppUserService {
 
 	ResponseEntity<?> login(String userData, String password);
 
-	List<AppUser> findBySearchCriteria(SearchCriteriaDto caseCriteria);
+	List<DetailedSearchDTO> findBySearchCriteria(SearchCriteriaDto caseCriteria);
 
 
 	

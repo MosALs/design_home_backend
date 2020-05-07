@@ -1,12 +1,12 @@
 package com.home.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.home.DTO.DetailedSearchDTO;
 import com.home.DTO.SearchCriteriaDto;
 import com.home.DTO.SearchResultDTO;
 import com.home.DTO.UserRegisterationDto;
@@ -124,9 +125,10 @@ public class AppUserServiceImp implements AppUserService {
 	}
 
 	@Override
-	public List<AppUser> findBySearchCriteria(SearchCriteriaDto caseCriteria) {
+	public List<DetailedSearchDTO> findBySearchCriteria(SearchCriteriaDto caseCriteria) {
 		
-		List<AppUser> appuser = appUsersRepository.findAll(new Specification<AppUser>() {
+		@SuppressWarnings("unchecked")
+		List<DetailedSearchDTO> detailedSearchDTO = appUsersRepository.findAll(new Specification<AppUser>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override		     
@@ -135,6 +137,13 @@ public class AppUserServiceImp implements AppUserService {
 				List<Predicate> predicates = new ArrayList<>();
 			
 				
+//				 Join<AppUser,Specialization> userProd = root.join("Specialization");
+//		            Join<FollowingRelationship,Product> prodRelation = userProd.join("ownedRelationships");
+//		            return cb.equal(prodRelation.get("follower"), input);
+				
+				if(StringUtils.isNotBlank(caseCriteria.getSpecializationName())) {
+					predicates.add(criteriaBuilder.like(root.get("specializationId").get("specializationName"),caseCriteria.getSpecializationName()));
+				}
 				
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
 					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
@@ -154,7 +163,7 @@ public class AppUserServiceImp implements AppUserService {
 			}
 
 		});
-		return appuser;
+		return detailedSearchDTO;
 	}
 	
 	

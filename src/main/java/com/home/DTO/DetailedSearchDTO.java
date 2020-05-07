@@ -2,6 +2,7 @@ package com.home.DTO;
 
 import com.home.Entity.Address;
 import com.home.Entity.AppUser;
+import com.home.Entity.Specialization;
 
 public class DetailedSearchDTO {
 
@@ -21,9 +22,22 @@ public class DetailedSearchDTO {
 	 * public String getName();
 	 */
 	
-	public AppUser appUser;
+	
+	private Specialization specialization;
+	
+	private AppUser appUser;
 	
 	public Address address;
+
+	
+	
+	public Specialization getSpecialization() {
+		return specialization;
+	}
+
+	public void setSpecialization(Specialization specialization) {
+		this.specialization = specialization;
+	}
 
 	public AppUser getAppUser() {
 		return appUser;
