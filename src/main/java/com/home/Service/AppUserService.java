@@ -24,7 +24,7 @@ public interface AppUserService {
 
 	ResponseEntity<?> login(String userData, String password);
 
-	List<DetailedSearchDTO> findBySearchCriteria(SearchCriteriaDto caseCriteria);
+	DetailedSearchDTO findBySearchCriteria(SearchCriteriaDto caseCriteria);
 
 
 	

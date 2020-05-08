@@ -5,18 +5,36 @@ import com.home.Entity.Specialization;
 
 public class SearchCriteriaDto {
 	
-	private String user_name;
-
+	private String specializationName;
+	private String areaName;
+	private String governorateName;
 	private String account_Type;
-
+	
+	private String user_name;
 	private String user_Mobile;
 	private AppUser appUser;
 
 	
-	private String specializationName;
 	
 	
 	
+	
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+
+	public String getGovernorateName() {
+		return governorateName;
+	}
+
+	public void setGovernorateName(String governorateName) {
+		this.governorateName = governorateName;
+	}
+
 	public String getSpecializationName() {
 		return specializationName;
 	}

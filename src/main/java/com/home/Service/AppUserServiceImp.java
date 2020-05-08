@@ -1,12 +1,14 @@
 package com.home.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -24,6 +26,7 @@ import com.home.DTO.SearchResultDTO;
 import com.home.DTO.UserRegisterationDto;
 import com.home.Entity.Address;
 import com.home.Entity.AppUser;
+import com.home.Entity.Areas;
 import com.home.Entity.Specialization;
 import com.home.Repository.AddressRepository;
 import com.home.Repository.AppUserRepository;
@@ -125,24 +128,36 @@ public class AppUserServiceImp implements AppUserService {
 	}
 
 	@Override
-	public List<DetailedSearchDTO> findBySearchCriteria(SearchCriteriaDto caseCriteria) {
+	public DetailedSearchDTO findBySearchCriteria(SearchCriteriaDto caseCriteria) {
 		
+		DetailedSearchDTO dtot = new DetailedSearchDTO();
 		@SuppressWarnings("unchecked")
-		List<DetailedSearchDTO> detailedSearchDTO = appUsersRepository.findAll(new Specification<AppUser>() {
+		List<AppUser> appUsers = appUsersRepository.findAll(new Specification<AppUser>() {
 			private static final long serialVersionUID = 1L;
-
 			@Override		     
 			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder)
 			{
 				List<Predicate> predicates = new ArrayList<>();
-			
-				
-//				 Join<AppUser,Specialization> userProd = root.join("Specialization");
-//		            Join<FollowingRelationship,Product> prodRelation = userProd.join("ownedRelationships");
-//		            return cb.equal(prodRelation.get("follower"), input);
-				
+			 
+				 
 				if(StringUtils.isNotBlank(caseCriteria.getSpecializationName())) {
-					predicates.add(criteriaBuilder.like(root.get("specializationId").get("specializationName"),caseCriteria.getSpecializationName()));
+					predicates.add(criteriaBuilder.equal(root.get("specializationId").get("specializationName"),caseCriteria.getSpecializationName()));
+					dtot.setSpecializationName(caseCriteria.getSpecializationName());
+
+				}
+				
+				if (StringUtils.isNotBlank(caseCriteria.getAreaName())) {
+					Join<AppUser,Address> join = root.join("addressList", JoinType.INNER);
+
+					Path<Set<String>> areas = join.get("areaId");
+					Path<String> areaName = areas.get("areaName");
+					predicates.add(criteriaBuilder.equal(areaName, caseCriteria.getAreaName()));
+					dtot.setAreaName(caseCriteria.getAreaName());
+
+				}
+				
+				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
+					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
 				}
 				
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
@@ -158,12 +173,18 @@ public class AppUserServiceImp implements AppUserService {
 					predicates.add(criteriaBuilder.equal(root.get("userName"), caseCriteria.getUser_name()));
 				}
 				
+				Predicate[] ps =  predicates.toArray(new Predicate[predicates.size()]);
 				
-				return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+				Predicate p = criteriaBuilder.and(ps);
+				
+				
+				return p;
 			}
 
 		});
-		return detailedSearchDTO;
+				
+		dtot.setAppUsers(appUsers);
+		return dtot;
 	}
 	
 	

@@ -106,6 +106,8 @@ public class AppUser implements Serializable {
     private String password;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appuserId", fetch = FetchType.LAZY)
+//    @OneToMany
+//    @JoinColumn(name ="appuser_id")
     private List<Address> addressList;
     @JsonIgnore
     @JoinColumn(name = "specialization_id", referencedColumnName = "id")

@@ -48,7 +48,6 @@ public interface AppUserRepository extends JpaRepository<AppUser, Integer>, JpaS
 
 	AppUser findByUserMobileAndPassword(String userMobile, String password);
 	
-	  <T> Collection<T> findAllS(Specification<AppUser> specification );
 
 
 }
