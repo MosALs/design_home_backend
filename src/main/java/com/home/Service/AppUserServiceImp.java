@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.type.SpecialOneToOneType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -135,8 +136,7 @@ public class AppUserServiceImp implements AppUserService {
 		List<AppUser> appUsers = appUsersRepository.findAll(new Specification<AppUser>() {
 			private static final long serialVersionUID = 1L;
 			@Override		     
-			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder)
-			{
+			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder){
 				List<Predicate> predicates = new ArrayList<>();
 			 
 				 
@@ -159,7 +159,7 @@ public class AppUserServiceImp implements AppUserService {
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
 					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
 				}
-				
+
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
 					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
 				}
