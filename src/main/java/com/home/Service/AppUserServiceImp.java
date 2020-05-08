@@ -11,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.type.SpecialOneToOneType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -132,19 +133,13 @@ public class AppUserServiceImp implements AppUserService {
 			private static final long serialVersionUID = 1L;
 
 			@Override		     
-			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder)
-			{
+			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder){
 				List<Predicate> predicates = new ArrayList<>();
-			
-				
-//				 Join<AppUser,Specialization> userProd = root.join("Specialization");
-//		            Join<FollowingRelationship,Product> prodRelation = userProd.join("ownedRelationships");
-//		            return cb.equal(prodRelation.get("follower"), input);
 				
 				if(StringUtils.isNotBlank(caseCriteria.getSpecializationName())) {
 					predicates.add(criteriaBuilder.like(root.get("specializationId").get("specializationName"),caseCriteria.getSpecializationName()));
 				}
-				
+
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
 					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
 				}
@@ -157,13 +152,16 @@ public class AppUserServiceImp implements AppUserService {
 				if (StringUtils.isNotBlank(caseCriteria.getUser_name())) {
 					predicates.add(criteriaBuilder.equal(root.get("userName"), caseCriteria.getUser_name()));
 				}
-				
+			
+			
 				
 				return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
 			}
 
 		});
+
 		return detailedSearchDTO;
+
 	}
 	
 	

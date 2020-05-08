@@ -15,6 +15,17 @@ public class SearchCriteriaDto {
 	
 	private String specializationName;
 	
+	public Specialization getSpecialization() {
+		return specialization;
+	}
+
+	public void setSpecialization(Specialization specialization) {
+		this.specialization = specialization;
+	}
+
+	public Specialization specialization;
+
+
 	
 	
 	public String getSpecializationName() {
