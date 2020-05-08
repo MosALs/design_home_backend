@@ -135,6 +135,7 @@ public class AppUserServiceImp implements AppUserService {
 			@Override		     
 			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder){
 				List<Predicate> predicates = new ArrayList<>();
+			
 				
 				if(StringUtils.isNotBlank(caseCriteria.getSpecializationName())) {
 					predicates.add(criteriaBuilder.like(root.get("specializationId").get("specializationName"),caseCriteria.getSpecializationName()));
@@ -152,8 +153,6 @@ public class AppUserServiceImp implements AppUserService {
 				if (StringUtils.isNotBlank(caseCriteria.getUser_name())) {
 					predicates.add(criteriaBuilder.equal(root.get("userName"), caseCriteria.getUser_name()));
 				}
-			
-			
 				
 				return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
 			}
