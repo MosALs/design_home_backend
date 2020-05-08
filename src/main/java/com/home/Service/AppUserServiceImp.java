@@ -13,7 +13,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.type.SpecialOneToOneType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,6 @@ import com.home.DTO.SearchResultDTO;
 import com.home.DTO.UserRegisterationDto;
 import com.home.Entity.Address;
 import com.home.Entity.AppUser;
-import com.home.Entity.Areas;
 import com.home.Entity.Specialization;
 import com.home.Repository.AddressRepository;
 import com.home.Repository.AppUserRepository;
@@ -156,22 +154,23 @@ public class AppUserServiceImp implements AppUserService {
 
 				}
 				
+				if (StringUtils.isNotBlank(caseCriteria.getGovernorateName())) {
+					Join<AppUser,Address> join = root.join("addressList", JoinType.INNER);
+					
+					Path<Set<String>> areas = join.get("areaId");
+					Path<String> governorate = areas.get("governorateId");
+					Path<String> governorateName = governorate.get("governoratName");
+ 					predicates.add(criteriaBuilder.equal(governorateName, caseCriteria.getGovernorateName()));
+					dtot.setAreaName(caseCriteria.getGovernorateName());
+					
+					
+					
+				}
+				
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
 					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
 				}
 
-				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
-					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
-				}
-
-				if (StringUtils.isNotBlank(caseCriteria.getUser_Mobile())) {
-					predicates.add(criteriaBuilder.equal(root.get("userMobile"), caseCriteria.getUser_Mobile()));
-				}
-
-			
-				if (StringUtils.isNotBlank(caseCriteria.getUser_name())) {
-					predicates.add(criteriaBuilder.equal(root.get("userName"), caseCriteria.getUser_name()));
-				}
 				
 				Predicate[] ps =  predicates.toArray(new Predicate[predicates.size()]);
 				

@@ -27,10 +27,20 @@ public class DetailedSearchDTO {
 	private String specializationName;
 	private String areaName;
 	private String governorateName;
+	private String accountType;
 	private List<AppUser> appUsers;
 	
 	private AppUser appUser;
 	private Address address;
+	
+	
+	
+	public String getAccountType() {
+		return accountType;
+	}
+	public void setAccounrType(String accounrType) {
+		this.accountType = accounrType;
+	}
 	public String getSpecializationName() {
 		return specializationName;
 	}

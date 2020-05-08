@@ -46,17 +46,13 @@ public class SearchController {
 
 	
 	@GetMapping(value = "/result/SearchAll")
-	public DetailedSearchDTO SearchCriteria(@RequestParam(value = "account_type" , required = false) String accountType, 
-			@RequestParam(value = "user_name" ,  required = false) String  userName,
-			@RequestParam(value =  "user_mobile" , required = false) String userMobile ,
+	public DetailedSearchDTO SearchCriteria(@RequestParam(value = "account_type" , required = false) String accountType,
 			@RequestParam(value =  "specialization_name" , required = false) String specializationName,
 			@RequestParam(value =  "area_name" , required = false) String areaName,
 			@RequestParam(value =  "governorate_name" , required = false) String governorateName){
 		
 		SearchCriteriaDto dto= new SearchCriteriaDto();
 		dto.setAccount_Type(accountType);
-		dto.setUser_name(userName);
-		dto.setUser_Mobile(userMobile);
 		dto.setSpecializationName(specializationName);
 		dto.setAreaName(areaName);
 		dto.setGovernorateName(governorateName);

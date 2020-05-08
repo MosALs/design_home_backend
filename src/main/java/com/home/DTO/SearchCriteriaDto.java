@@ -10,8 +10,7 @@ public class SearchCriteriaDto {
 	private String governorateName;
 	private String account_Type;
 	
-	private String user_name;
-	private String user_Mobile;
+
 	private AppUser appUser;
 
 	
@@ -62,15 +61,6 @@ public class SearchCriteriaDto {
 		this.appUser = appUser;
 	}
 
-
-	public String getUser_name() {
-		return user_name;
-	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-
 	public String getAccount_Type() {
 		return account_Type;
 	}
@@ -79,13 +69,6 @@ public class SearchCriteriaDto {
 		this.account_Type = account_Type;
 	}
 
-	public String getUser_Mobile() {
-		return user_Mobile;
-	}
-
-	public void setUser_Mobile(String user_Mobile) {
-		this.user_Mobile = user_Mobile;
-	}
 
 	
 	
