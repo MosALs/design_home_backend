@@ -169,6 +169,7 @@ public class AppUserServiceImp implements AppUserService {
 				
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
 					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
+					dtot.setAccounrType(caseCriteria.getAccount_Type());
 				}
 
 				
