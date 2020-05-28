@@ -10,4 +10,14 @@ public class TestController {
     public String welcomeTest(){
         return "welcome kmg";
     }
+
+    @RequestMapping(value = "/user")
+    public String user(){
+        return "welcome user";
+    }
+
+    @RequestMapping(value = "/admin")
+    public String admin(){
+        return "welcome admin";
+    }
 }
