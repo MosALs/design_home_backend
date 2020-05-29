@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
 
-    private String username;
+    private String userName;
     private String password;
     private boolean active ;
     private List<GrantedAuthority> roles;
 
     public CustomUserDetails(AppUser appUser){
-        this.username = appUser.getUserName();
+        this.userName = appUser.getUserName();
         this.password = appUser.getPassword();
         this.active = appUser.isActive();
         this.roles = Arrays.stream(appUser.getRoles().split(","))
@@ -26,38 +26,40 @@ public class CustomUserDetails implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    public CustomUserDetails(){}
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return userName;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return active;
     }
 }
