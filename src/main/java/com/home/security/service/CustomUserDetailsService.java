@@ -2,7 +2,7 @@ package com.home.security.service;
 
 import com.home.Entity.AppUser;
 import com.home.Repository.AppUserRepository;
-import com.home.security.CustomUserDetails;
+import com.home.security.model.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
