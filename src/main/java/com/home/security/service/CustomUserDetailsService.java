@@ -4,6 +4,7 @@ import com.home.Entity.AppUser;
 import com.home.Repository.AppUserRepository;
 import com.home.security.model.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,10 +20,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("KMG == username before : "+username);
+        System.out.println("KMG == loadUserByUsername() username before : "+username);
         Optional<AppUser> appUser = appUserRepository.findByUserName(username);
-        System.out.println("KMG == username : "+ appUser.get().getUserName());
-        appUser.orElseThrow(() -> new UsernameNotFoundException("User name not found !"+ username));
-        return appUser.map(CustomUserDetails::new).get();
+        if (!appUser.isPresent()){
+            return null;
+        }
+        CustomUserDetails customUserDetails = appUser.map(CustomUserDetails::new).get();
+//        appUser.orElseThrow(() -> new UsernameNotFoundException("User name not found !"+ username));
+        return customUserDetails;
     }
 }
