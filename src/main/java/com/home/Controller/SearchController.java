@@ -19,32 +19,7 @@ import com.home.Service.AppUserService;
 public class SearchController {
 
 	@Autowired
-	private AppUserService usersService;
-
-	@GetMapping(value = "/result")
-	public List<SearchResultDTO> search(@RequestParam("area_name") String areaName,
-			@RequestParam("account_type") String accountType,
-			@RequestParam("specialization_name") String specializationName) {
-
-		return usersService.search(areaName, accountType, specializationName);
-	}
-
-	@GetMapping(value = "/result/all")
-	public List<AppUser> searchALL(@RequestParam("area_name") String areaName, @RequestParam("account_type") String accountType,
-			@RequestParam("specialization_name") String specializationName, @RequestParam("governorat_name")String governoratName) {
-			
-		DetailedSearchDTO dtoall=new DetailedSearchDTO();
-		dtoall.getAppUser().setAccountType(accountType);
-		dtoall.getAppUser().getSpecializationId().setSpecializationName(specializationName);
-		dtoall.getAddress().getAreaId().setAreaName(areaName);
-		dtoall.getAppUser().getAddressList();
-		dtoall.getAddress().getAreaId().getGovernorateId().setGovernoratName(governoratName);
-		
-		//return usersService.searchAll(dtoall);
-		return usersService.searchAll(areaName, accountType, specializationName, governoratName);
-	}
-
-	
+	private AppUserService usersService;	
 	@GetMapping(value = "/result/SearchAll")
 	public DetailedSearchDTO SearchCriteria(@RequestParam(value = "account_type" , required = false) String accountType,
 			@RequestParam(value =  "specialization_name" , required = false) String specializationName,

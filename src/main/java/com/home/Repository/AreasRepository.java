@@ -24,9 +24,6 @@ public interface AreasRepository extends JpaRepository<Areas, Integer> {
 
 	List<Areas> findByGovernorateId(int governorateId);
 
-	@Procedure(procedureName = "SelectAllAreas")
-	List<Areas> SelectAllAreasBYName(String areaName);
-
 	@Modifying()
 	@Transactional
 	@Query(value = "UPDATE Areas a SET a.areaName=:newAreaName WHERE a.areaName=:oldAreaName")
