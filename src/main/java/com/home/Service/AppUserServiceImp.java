@@ -46,6 +46,12 @@ public class AppUserServiceImp implements AppUserService {
 	}
 
 	@Override
+	public List<SearchResultDTO> search(String areaName, String accountType, String specializationName) {
+		return null;
+//		return appUsersRepository.search(areaName, accountType, specializationName);
+	}
+
+	@Override
 	public ResponseEntity<?> login(String userData, String password) {
 		String userName = null;
 		String userMobile = null;
@@ -163,6 +169,7 @@ public class AppUserServiceImp implements AppUserService {
 
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
 					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
+					dtot.setAccounrType(caseCriteria.getAccount_Type());
 				}
 
 				Predicate[] ps = predicates.toArray(new Predicate[predicates.size()]);

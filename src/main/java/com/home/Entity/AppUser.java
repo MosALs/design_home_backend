@@ -104,6 +104,10 @@ public class AppUser implements Serializable {
     @Size(min = 1, max = 50)
     @Column(nullable = false, length = 50)
     private String password;
+
+    private boolean active ;
+    private String roles ;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appuserId", fetch = FetchType.LAZY)
 //    @OneToMany
@@ -239,6 +243,22 @@ public class AppUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     @XmlTransient

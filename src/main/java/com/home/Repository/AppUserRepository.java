@@ -2,6 +2,7 @@ package com.home.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,7 +27,7 @@ public interface AppUserRepository extends JpaRepository<AppUser, Integer>, JpaS
 			+ "s.specialization_name= :specialization_name", nativeQuery = true)
 	List<SearchResultDTO> search(@Param("area_name") String areaName, @Param("account_type") String accountType,
 			@Param("specialization_name") String specializationName);
-	
+
 
 
 	// بحث شامل
@@ -49,5 +50,6 @@ public interface AppUserRepository extends JpaRepository<AppUser, Integer>, JpaS
 	AppUser findByUserMobileAndPassword(String userMobile, String password);
 	
 
+	Optional<AppUser> findByUserName(String userName);
 
 }
