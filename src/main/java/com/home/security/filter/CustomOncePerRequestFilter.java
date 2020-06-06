@@ -30,6 +30,7 @@ public class CustomOncePerRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");
+        System.out.println("KMG == authorizationHeader in filter " + authorizationHeader);
         String jwt = null;
         String username = null;
 

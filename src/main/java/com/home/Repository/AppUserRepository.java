@@ -27,7 +27,7 @@ public interface AppUserRepository extends JpaRepository<AppUser, Integer>, JpaS
 			+ "s.specialization_name= :specialization_name", nativeQuery = true)
 	List<SearchResultDTO> search(@Param("area_name") String areaName, @Param("account_type") String accountType,
 			@Param("specialization_name") String specializationName);
-	
+
 
 
 	// بحث شامل

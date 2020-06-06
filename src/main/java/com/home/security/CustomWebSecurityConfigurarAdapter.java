@@ -13,8 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAdapter {
@@ -27,9 +27,9 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        System.out.println("KMG == configure(AuthenticationManagerBuilder auth)");
-        auth.userDetailsService(customUserDetailsService)
-                .passwordEncoder(passwordEncoderBean());
+//        System.out.println("KMG == configure(AuthenticationManagerBuilder auth)");
+//        auth.userDetailsService(customUserDetailsService)
+//                .passwordEncoder(passwordEncoderBean());
     }
 
     @Bean
@@ -39,10 +39,10 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("KMG == configure(HttpSecurity http)");
-        http.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate").permitAll()
-                .anyRequest().authenticated();
+//        System.out.println("KMG == configure(HttpSecurity http)");
+//        http.csrf().disable()
+//                .authorizeRequests().antMatchers("/authenticate").permitAll()
+//                .anyRequest().authenticated()
 //                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //        http.addFilterBefore(customOncePerRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
@@ -56,6 +56,6 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
     @Override
     public void configure(WebSecurity web) throws Exception {
         System.out.println("KMG == configure(WebSecurity web)");
-        web.ignoring().antMatchers(HttpMethod.POST,"authenticate");
+//        web.ignoring().antMatchers(HttpMethod.POST,"authenticate");
     }
 }

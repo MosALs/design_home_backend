@@ -2,28 +2,29 @@ package com.home.Service;
 
 import java.util.List;
 
+import com.home.entities.AreasEntity;
 import org.springframework.stereotype.Service;
-
-import com.home.DTO.Governorates_AreasDTO;
-import com.home.Entity.Areas;
 
 @Service
 public interface AreasService {
 
-	boolean save(Areas areas);
+//    boolean save(Areas areas);
 
-	int Modify(String newAreaName, String oldAreaName);
+//    int Modify(String newAreaName, String oldAreaName);
 
-	Areas delete(Areas areas);
+//    Areas delete(Areas areas);
 
-	void deleteAreas(int id);
+//    void deleteAreas(int id);
 
-	List<Areas> getAll();
+    List<AreasEntity> getAll();
 
-	// Areas getBYId (int id);
-	List<Governorates_AreasDTO> getBYName();
+    List<AreasEntity> getAreasByGovernorateId(int governrateId);
 
-	List<Areas> getByGovernate(int governorate_id);
+    AreasEntity getAreaByName(String areaName);
 
-	
+    // Areas getBYId (int id);
+//    List<Governorates_AreasDTO> getBYName();
+
+//    List<Areas> getByGovernate(int governorate_id);
+
 }

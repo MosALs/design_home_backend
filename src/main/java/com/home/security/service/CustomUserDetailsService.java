@@ -4,7 +4,6 @@ import com.home.Entity.AppUser;
 import com.home.Repository.AppUserRepository;
 import com.home.security.model.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

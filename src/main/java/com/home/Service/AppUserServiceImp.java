@@ -47,8 +47,8 @@ public class AppUserServiceImp implements AppUserService {
 
 	@Override
 	public List<SearchResultDTO> search(String areaName, String accountType, String specializationName) {
-
-		return appUsersRepository.search(areaName, accountType, specializationName);
+		return null;
+//		return appUsersRepository.search(areaName, accountType, specializationName);
 	}
 
 	@Override
