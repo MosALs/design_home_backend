@@ -1,5 +1,9 @@
 package com.home.entities;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -46,6 +50,7 @@ public class UserRoleEntity {
     }
 
     @OneToMany(mappedBy = "userRoleByUserRoleId")
+    @JsonManagedReference
     public Collection<AppUserEntity> getAppUsersById() {
         return appUsersById;
     }

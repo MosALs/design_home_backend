@@ -1,6 +1,6 @@
 package com.home.security.model;
 
-import com.home.Entity.AppUser;
+import com.home.entities.AppUserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,20 +10,23 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class CustomUserDetails implements UserDetails {
 
     private String userName;
     private String password;
     private boolean active ;
     private List<GrantedAuthority> roles;
+    private  SimpleGrantedAuthority role;
 
-    public CustomUserDetails(AppUser appUser){
+    public CustomUserDetails(AppUserEntity appUser){
         this.userName = appUser.getUserName();
         this.password = appUser.getPassword();
         this.active = appUser.isActive();
-        this.roles = Arrays.stream(appUser.getRoles().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+//        this.roles = Arrays.stream(appUser.getUserRoleByUserRoleId())
+//                .map(SimpleGrantedAuthority::new)
+//                .collect(Collectors.toList());
+//        this.role = new SimpleGrantedAuthority(appUser.getUserRoleByUserRoleId().getUserRoleName());
     }
 
     public CustomUserDetails(){}
@@ -32,6 +35,8 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
+
+
 
     @Override
     public String getPassword() {

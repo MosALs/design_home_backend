@@ -1,5 +1,7 @@
 package com.home.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -45,6 +47,7 @@ public class SpecializationEntity {
         return Objects.hash(id, specializationName);
     }
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "specializationBySpecializationId")
     public Collection<ShopEntity> getShopsById() {
         return shopsById;

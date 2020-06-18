@@ -1,5 +1,11 @@
 package com.home.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.home.jsonfilter.View;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,12 +15,19 @@ import java.util.Objects;
 @Table(name = "app_user", schema = "dbo", catalog = "kmgnew")
 public class AppUserEntity {
     private int id;
+
     private String name;
+    @JsonView({View.AuthenticateInfo.class,View.SearchCriteriaInfo.class})
     private String userName;
+    @JsonView(View.SearchCriteriaInfo.class)
     private String userMobile;
+    @JsonView(View.SearchCriteriaInfo.class)
     private byte[] userImage;
+    @JsonView(View.SearchCriteriaInfo.class)
     private String userHours;
+//    @JsonView(View.SearchCriteriaInfo.class)
     private Integer specializationId;
+    @JsonView(View.SearchCriteriaInfo.class)
     private String userGender;
     private String accountType;
     private String tradeName;
@@ -22,10 +35,13 @@ public class AppUserEntity {
     private String wholeRetailSale;
     private String deliveryNoDelivery;
     private String websiteLink;
+    @JsonView(View.AuthenticateInfo.class)
     private String password;
+    @JsonView(View.AuthenticateInfo.class)
     private boolean active;
     private int userRoleId;
     private String facbookLink;
+    @JsonView(View.AuthenticateInfo.class)
     private UserRoleEntity userRoleByUserRoleId;
     private Collection<ShopEntity> shopsById;
     private Collection<WorkOrderEntity> workOrdersById;
@@ -39,6 +55,7 @@ public class AppUserEntity {
     public void setId(int id) {
         this.id = id;
     }
+
 
     @Basic
     @Column(name = "name")
@@ -242,7 +259,8 @@ public class AppUserEntity {
         return result;
     }
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_role_id", referencedColumnName = "id", nullable = false,insertable= false , updatable= false)
     public UserRoleEntity getUserRoleByUserRoleId() {
         return userRoleByUserRoleId;
@@ -253,6 +271,7 @@ public class AppUserEntity {
     }
 
     @OneToMany(mappedBy = "appUserByUserId")
+    @JsonManagedReference
     public Collection<ShopEntity> getShopsById() {
         return shopsById;
     }

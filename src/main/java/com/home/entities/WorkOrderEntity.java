@@ -1,5 +1,7 @@
 package com.home.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -164,6 +166,7 @@ public class WorkOrderEntity {
         this.appUserByRequsetUserId = appUserByRequsetUserId;
     }
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "work_user_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public ShopEntity getShopByWorkUserId() {

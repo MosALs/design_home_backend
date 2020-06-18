@@ -21,6 +21,10 @@ public class SearchController {
 	@Autowired
 	private AppUserService usersService;
 
+
+	@Autowired
+	private com.home.services.AppUserService usersEntityService;
+
 	@GetMapping(value = "/result")
 	public List<SearchResultDTO> search(@RequestParam("area_name") String areaName,
 			@RequestParam("account_type") String accountType,
@@ -56,7 +60,7 @@ public class SearchController {
 		dto.setSpecializationName(specializationName);
 		dto.setAreaName(areaName);
 		dto.setGovernorateName(governorateName);
-	  return usersService.findBySearchCriteria(dto);
+	  return usersEntityService.findBySearchCriteria(dto);
 
 }
 

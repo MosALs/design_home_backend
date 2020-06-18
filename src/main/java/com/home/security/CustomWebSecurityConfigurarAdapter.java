@@ -27,9 +27,9 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        System.out.println("KMG == configure(AuthenticationManagerBuilder auth)");
-//        auth.userDetailsService(customUserDetailsService)
-//                .passwordEncoder(passwordEncoderBean());
+        System.out.println("KMG == configure(AuthenticationManagerBuilder auth)");
+        auth.userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoderBean());
     }
 
     @Bean
@@ -39,12 +39,12 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        System.out.println("KMG == configure(HttpSecurity http)");
-//        http.csrf().disable()
-//                .authorizeRequests().antMatchers("/authenticate").permitAll()
-//                .anyRequest().authenticated()
-//                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.addFilterBefore(customOncePerRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        System.out.println("KMG == configure(HttpSecurity http)");
+        http.csrf().disable()
+                .authorizeRequests().antMatchers("/authenticate").permitAll()
+                .anyRequest().authenticated()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(customOncePerRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -56,6 +56,6 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
     @Override
     public void configure(WebSecurity web) throws Exception {
         System.out.println("KMG == configure(WebSecurity web)");
-//        web.ignoring().antMatchers(HttpMethod.POST,"authenticate");
+        web.ignoring().antMatchers(HttpMethod.POST,"authenticate");
     }
 }

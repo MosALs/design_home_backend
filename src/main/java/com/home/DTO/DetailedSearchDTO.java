@@ -5,6 +5,7 @@ import java.util.List;
 import com.home.Entity.Address;
 import com.home.Entity.AppUser;
 import com.home.Entity.Specialization;
+import com.home.entities.AppUserEntity;
 
 public class DetailedSearchDTO {
 
@@ -28,13 +29,21 @@ public class DetailedSearchDTO {
 	private String areaName;
 	private String governorateName;
 	private String accountType;
+	private List<AppUserEntity> appUserEntities;
 	private List<AppUser> appUsers;
 	
 	private AppUser appUser;
 	private Address address;
-	
-	
-	
+
+
+	public List<AppUserEntity> getAppUserEntities() {
+		return appUserEntities;
+	}
+
+	public void setAppUserEntities(List<AppUserEntity> appUserEntities) {
+		this.appUserEntities = appUserEntities;
+	}
+
 	public String getAccountType() {
 		return accountType;
 	}

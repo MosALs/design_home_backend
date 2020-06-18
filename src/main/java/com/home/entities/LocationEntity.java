@@ -2,6 +2,7 @@ package com.home.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
@@ -73,6 +74,7 @@ public class LocationEntity {
         this.areasByAreaId = areasByAreaId;
     }
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "locationByLocationId" , fetch = FetchType.LAZY)
     public Collection<ShopEntity> getShopsById() {
         return shopsById;
