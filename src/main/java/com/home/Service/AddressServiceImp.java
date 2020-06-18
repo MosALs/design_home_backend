@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.home.Entity.Address;
 import com.home.Repository.AddressRepository;
+
+import java.util.List;
+
 @Service
 public class AddressServiceImp implements AddressService{
 
@@ -16,5 +19,15 @@ public class AddressServiceImp implements AddressService{
 		return branchesRepository.save(address)!=null;
 	}
 
-	
+	@Override
+	public List<Address> findByAddressId_Id(int id) {
+		return null;
+	}
+
+	@Override
+	public Address getByAddressId(int id) {
+		return null;
+	}
+
+
 }
