@@ -18,6 +18,7 @@ public interface AppUserService {
 
 	ResponseEntity<?> save(UserRegisterationDto appUser);
 
+	List<SearchResultDTO> search(String areaName, String accountType, String specializationName);
 
 	List<AppUser> searchAll(String areaName, String accountType, String specializationName, String governoratName);
 

@@ -17,7 +17,6 @@ public interface AddressRepository extends JpaRepository<Address, Integer>{
 	@Modifying()
 	@Transactional
 	@Query(value = "UPDATE Address b SET b.addresName=:newaddresName WHERE b.addresName=:oldaddresName")
-
 	int updateArea(@Param("newaddresName") String newAreaName, @Param("newaddresName") String oldAreaName);
-	
+
 }

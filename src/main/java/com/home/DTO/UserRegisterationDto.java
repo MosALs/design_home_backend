@@ -9,11 +9,10 @@ public class UserRegisterationDto {
 	private AppUser appUser;
 	private Address address ;
 	private Specialization specialization;
-
-	
 	public AppUser getAppUser() {
 		return appUser;
-	}    
+	}
+        
 	public void setUser(AppUser appUser) {
 		this.appUser = appUser;
 	}
