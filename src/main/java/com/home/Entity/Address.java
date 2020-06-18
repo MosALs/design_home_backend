@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author goher
  */
 @Entity
-@Table(catalog = "kmg", schema = "dbo")
+@Table( schema = "dbo")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")

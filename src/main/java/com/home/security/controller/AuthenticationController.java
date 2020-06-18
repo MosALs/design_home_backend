@@ -1,8 +1,7 @@
 package com.home.security.controller;
 
-import com.home.security.Util.JwtUtil;
-import com.home.security.model.AuthenticationResponse;
-import com.home.security.service.CustomUserDetailsService;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +10,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.home.security.Util.JwtUtil;
 import com.home.security.model.AuthenticationRequest;
-
-import java.util.Objects;
+import com.home.security.model.AuthenticationResponse;
+import com.home.security.service.CustomUserDetailsService;
 
 @RestController
+
 public class AuthenticationController {
 
     @Autowired

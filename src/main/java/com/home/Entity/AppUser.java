@@ -7,6 +7,7 @@ package com.home.Entity;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author goher
  */
 @Entity
-@Table(name = "app_user", catalog = "kmg", schema = "dbo")
+@Table(name = "app_user", schema = "dbo")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AppUser.findAll", query = "SELECT a FROM AppUser a")

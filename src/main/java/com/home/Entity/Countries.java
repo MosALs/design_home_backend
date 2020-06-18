@@ -7,6 +7,7 @@ package com.home.Entity;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author goher
  */
 @Entity
-@Table(catalog = "kmg", schema = "dbo")
+@Table( schema = "dbo")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Countries.findAll", query = "SELECT c FROM Countries c")
