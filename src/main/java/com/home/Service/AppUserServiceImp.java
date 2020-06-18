@@ -22,7 +22,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.home.DTO.DetailedSearchDTO;
 import com.home.DTO.SearchCriteriaDto;
-import com.home.DTO.SearchResultDTO;
 import com.home.DTO.UserRegisterationDto;
 import com.home.Entity.Address;
 import com.home.Entity.AppUser;
@@ -37,6 +36,7 @@ public class AppUserServiceImp implements AppUserService {
 	AppUserRepository appUsersRepository;
 	@Autowired
 	AddressRepository addressRepository;
+
 	AreasService areasService;
 
 	@Override
@@ -101,10 +101,11 @@ public class AppUserServiceImp implements AppUserService {
 			}
 			System.out.println(appUser.getAccountType());
 			if (!appUser.getAccountType().equals("عميل")) {
-				
-					if(appUser.getSpecializationId() == null ) {
-						throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Please enter the Specialization");
-					}
+
+				if (appUser.getSpecializationId() == null) {
+					throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+							"Please enter the Specialization");
+				}
 
 			}
 			appUser = appUsersRepository.save(appUser);
@@ -128,24 +129,25 @@ public class AppUserServiceImp implements AppUserService {
 
 	@Override
 	public DetailedSearchDTO findBySearchCriteria(SearchCriteriaDto caseCriteria) {
-		
+
 		DetailedSearchDTO dtot = new DetailedSearchDTO();
 		@SuppressWarnings("unchecked")
 		List<AppUser> appUsers = appUsersRepository.findAll(new Specification<AppUser>() {
 			private static final long serialVersionUID = 1L;
-			@Override		     
-			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder){
+
+			@Override
+			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 				List<Predicate> predicates = new ArrayList<>();
-			 
-				 
-				if(StringUtils.isNotBlank(caseCriteria.getSpecializationName())) {
-					predicates.add(criteriaBuilder.equal(root.get("specializationId").get("specializationName"),caseCriteria.getSpecializationName()));
+
+				if (StringUtils.isNotBlank(caseCriteria.getSpecializationName())) {
+					predicates.add(criteriaBuilder.equal(root.get("specializationId").get("specializationName"),
+							caseCriteria.getSpecializationName()));
 					dtot.setSpecializationName(caseCriteria.getSpecializationName());
 
 				}
-				
+
 				if (StringUtils.isNotBlank(caseCriteria.getAreaName())) {
-					Join<AppUser,Address> join = root.join("addressList", JoinType.INNER);
+					Join<AppUser, Address> join = root.join("addressList", JoinType.INNER);
 
 					Path<Set<String>> areas = join.get("areaId");
 					Path<String> areaName = areas.get("areaName");
@@ -153,43 +155,34 @@ public class AppUserServiceImp implements AppUserService {
 					dtot.setAreaName(caseCriteria.getAreaName());
 
 				}
-				
+
 				if (StringUtils.isNotBlank(caseCriteria.getGovernorateName())) {
-					Join<AppUser,Address> join = root.join("addressList", JoinType.INNER);
-					
+					Join<AppUser, Address> join = root.join("addressList", JoinType.INNER);
+
 					Path<Set<String>> areas = join.get("areaId");
 					Path<String> governorate = areas.get("governorateId");
 					Path<String> governorateName = governorate.get("governoratName");
- 					predicates.add(criteriaBuilder.equal(governorateName, caseCriteria.getGovernorateName()));
+					predicates.add(criteriaBuilder.equal(governorateName, caseCriteria.getGovernorateName()));
 					dtot.setAreaName(caseCriteria.getGovernorateName());
-					
-					
-					
+
 				}
-				
+
 				if (StringUtils.isNotBlank(caseCriteria.getAccount_Type())) {
 					predicates.add(criteriaBuilder.equal(root.get("accountType"), caseCriteria.getAccount_Type()));
 					dtot.setAccounrType(caseCriteria.getAccount_Type());
 				}
 
-				
-				Predicate[] ps =  predicates.toArray(new Predicate[predicates.size()]);
-				
+				Predicate[] ps = predicates.toArray(new Predicate[predicates.size()]);
+
 				Predicate p = criteriaBuilder.and(ps);
-				
-				
+
 				return p;
 			}
 
 		});
-				
+
 		dtot.setAppUsers(appUsers);
 		return dtot;
 	}
-	
-	
-	
-	
-	}
 
-
+}
