@@ -3,7 +3,10 @@ package com.home.Controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.home.entities.AppUserEntity;
 import com.home.jsonfilter.View;
+import com.home.repositories.AppUserRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,6 +23,9 @@ public class AppUserController {
 
 
     //localhost:8080/rest/uset/login?userData=bbb&password=123&&userMobile=123456
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @Autowired
     private AppUserService usersService;
@@ -52,4 +58,14 @@ public class AppUserController {
     public Optional<AppUserEntity> getUserSummart(@PathVariable int id){
         return appUserEntityService.getUserSummary(id);
     }
+
+    @PostMapping(value = "/save")
+    public ResponseEntity<?> saveAppUser(@RequestBody AppUserEntity appUserEntity){
+        if(appUserEntity.getUserRoleId() == 0){
+            return new ResponseEntity<>("user role should not be null",HttpStatus.INTERNAL_SERVER_ERROR);
+        }else{
+            return new ResponseEntity<>(appUserRepository.save(appUserEntity),HttpStatus.OK);
+        }
+    }
+
 }
