@@ -138,7 +138,6 @@ public class ShopEntity {
         return Objects.hash(id, userId, shopName, specializationId, locationId, street, active, startDate, accountTypeId);
     }
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public AppUserEntity getAppUserByUserId() {
@@ -149,7 +148,6 @@ public class ShopEntity {
         this.appUserByUserId = appUserByUserId;
     }
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "specialization_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public SpecializationEntity getSpecializationBySpecializationId() {
@@ -160,7 +158,6 @@ public class ShopEntity {
         this.specializationBySpecializationId = specializationBySpecializationId;
     }
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public LocationEntity getLocationByLocationId() {
@@ -171,7 +168,6 @@ public class ShopEntity {
         this.locationByLocationId = locationByLocationId;
     }
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "account_type_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public AccountTypeEntity getAccountTypeByAccountTypeId() {
@@ -182,7 +178,6 @@ public class ShopEntity {
         this.accountTypeByAccountTypeId = accountTypeByAccountTypeId;
     }
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "shopByShopId")
     public Collection<ShopProductEntity> getShopProductsById() {
         return shopProductsById;
@@ -192,7 +187,7 @@ public class ShopEntity {
         this.shopProductsById = shopProductsById;
     }
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "shopByWorkUserId")
     public Collection<WorkOrderEntity> getWorkOrdersById() {
         return workOrdersById;

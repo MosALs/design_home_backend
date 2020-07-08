@@ -47,7 +47,6 @@ public class AccountTypeEntity {
         return Objects.hash(id, accountTypeName);
     }
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "accountTypeByAccountTypeId")
     public Collection<ShopEntity> getShopsById() {
         return shopsById;

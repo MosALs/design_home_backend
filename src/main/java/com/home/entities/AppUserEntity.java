@@ -1,8 +1,5 @@
 package com.home.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.home.jsonfilter.View;
 
@@ -14,6 +11,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "app_user", schema = "dbo", catalog = "kmgnew")
 public class AppUserEntity {
+
+
     private int id;
 
     private String name;
@@ -29,7 +28,7 @@ public class AppUserEntity {
     private Integer specializationId;
     @JsonView(View.SearchCriteriaInfo.class)
     private String userGender;
-    private String accountType;
+//    private String accountType;
     private String tradeName;
     private String tradeMobileNumber;
     private String wholeRetailSale;
@@ -47,6 +46,7 @@ public class AppUserEntity {
     private Collection<WorkOrderEntity> workOrdersById;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -127,15 +127,6 @@ public class AppUserEntity {
         this.userGender = userGender;
     }
 
-    @Basic
-    @Column(name = "account_type")
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
 
     @Basic
     @Column(name = "trade_name")
@@ -242,7 +233,6 @@ public class AppUserEntity {
                 Objects.equals(userHours, that.userHours) &&
                 Objects.equals(specializationId, that.specializationId) &&
                 Objects.equals(userGender, that.userGender) &&
-                Objects.equals(accountType, that.accountType) &&
                 Objects.equals(tradeName, that.tradeName) &&
                 Objects.equals(tradeMobileNumber, that.tradeMobileNumber) &&
                 Objects.equals(wholeRetailSale, that.wholeRetailSale) &&
@@ -254,14 +244,13 @@ public class AppUserEntity {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, userName, userMobile, userHours, specializationId, userGender, accountType, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
+        int result = Objects.hash(id, name, userName, userMobile, userHours, specializationId, userGender,  tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
         result = 31 * result + Arrays.hashCode(userImage);
         return result;
     }
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_role_id", referencedColumnName = "id", nullable = false,insertable= false , updatable= false)
+    @JoinColumn(name = "user_role_id", referencedColumnName = "id",nullable = false,insertable = false,updatable = false)
     public UserRoleEntity getUserRoleByUserRoleId() {
         return userRoleByUserRoleId;
     }
@@ -271,7 +260,6 @@ public class AppUserEntity {
     }
 
     @OneToMany(mappedBy = "appUserByUserId")
-    @JsonManagedReference
     public Collection<ShopEntity> getShopsById() {
         return shopsById;
     }

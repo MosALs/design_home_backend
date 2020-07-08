@@ -65,7 +65,6 @@ public class LocationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id",insertable= false , updatable= false)
-    @JsonBackReference
     public AreasEntity getAreasByAreaId() {
         return areasByAreaId;
     }
@@ -74,7 +73,6 @@ public class LocationEntity {
         this.areasByAreaId = areasByAreaId;
     }
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "locationByLocationId" , fetch = FetchType.LAZY)
     public Collection<ShopEntity> getShopsById() {
         return shopsById;

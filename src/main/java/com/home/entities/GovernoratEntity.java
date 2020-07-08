@@ -64,7 +64,6 @@ public class GovernoratEntity {
     }
 
     @OneToMany(mappedBy = "governoratByGovernoratId")
-    @JsonManagedReference
     public Collection<AreasEntity> getAreasById() {
         return areasById;
     }
