@@ -1,27 +1,13 @@
 package com.home.entities;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.home.jsonfilter.View;
 
 @Entity
 @Table(name = "app_user", schema = "dbo", catalog = "kmgnew")
 public class AppUserEntity {
+
+
     private int id;
 
     private String name;
@@ -52,6 +38,7 @@ public class AppUserEntity {
     private Collection<WorkOrderEntity> workOrdersById;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -240,13 +227,13 @@ public class AppUserEntity {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, userName, userMobile, userHours,userGender, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
+        int result = Objects.hash(id, name, userName, userMobile, userHours, specializationId, userGender, accountType, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
         result = 31 * result + Arrays.hashCode(userImage);
         return result;
     }
 
-//    @JsonBackReference
-    @ManyToOne()
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_role_id", referencedColumnName = "id", nullable = false,insertable= false , updatable= false)
     public UserRoleEntity getUserRoleByUserRoleId() {
         return userRoleByUserRoleId;
@@ -257,7 +244,6 @@ public class AppUserEntity {
     }
 
     @OneToMany(mappedBy = "appUserByUserId")
-    @JsonManagedReference("user-shop")
     public Collection<ShopEntity> getShopsById() {
         return shopsById;
     }

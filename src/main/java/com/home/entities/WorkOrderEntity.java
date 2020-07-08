@@ -166,7 +166,6 @@ public class WorkOrderEntity {
         this.appUserByRequsetUserId = appUserByRequsetUserId;
     }
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "work_user_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public ShopEntity getShopByWorkUserId() {

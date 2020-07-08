@@ -12,6 +12,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.home.DTO.SearchResultDTO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -56,6 +57,13 @@ public class AppUserServiceImp implements AppUserService {
 		return 0;
 	}
 
+//	@Override
+//	public List<SearchResultDTO> search(String areaName, String accountType, String specializationName) {
+//		return null;
+////		return appUsersRepository.search(areaName, accountType, specializationName);
+//	}
+
+	@Override
 	@Override
 	public ResponseEntity<?> login(String userData, String password) {
 		String userName = null;

@@ -1,8 +1,14 @@
 package com.home.Controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.home.entities.AppUserEntity;
+import com.home.jsonfilter.View;
+import com.home.repositories.AppUserRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +36,11 @@ public class AppUserController {
 	@Autowired
 	private AppUserService usersService;
 
+    @Autowired
+    private AppUserRepository appUserRepository;
+
+    @Autowired
+    private AppUserService usersService;
 	@Autowired
 	private com.home.services.AppUserService appUserEntityService;
 
@@ -59,6 +70,21 @@ public class AppUserController {
 	public Optional<AppUserEntity> getUserSummart(@PathVariable int id) {
 		return appUserEntityService.getUserSummary(id);
 	}
+
+    @JsonView(View.AuthenticateInfo.class)
+    @GetMapping(value = "/userSummary/{id}")
+    public Optional<AppUserEntity> getUserSummart(@PathVariable int id){
+        return appUserEntityService.getUserSummary(id);
+    }
+
+    @PostMapping(value = "/save")
+    public ResponseEntity<?> saveAppUser(@RequestBody AppUserEntity appUserEntity){
+        if(appUserEntity.getUserRoleId() == 0){
+            return new ResponseEntity<>("user role should not be null",HttpStatus.INTERNAL_SERVER_ERROR);
+        }else{
+            return new ResponseEntity<>(appUserRepository.save(appUserEntity),HttpStatus.OK);
+        }
+    }
 
 	@RequestMapping(value = "/Add", method = RequestMethod.POST)
 	public ResponseEntity<?> svae(@RequestBody UserRegisterationDto dto) {

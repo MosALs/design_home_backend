@@ -47,7 +47,6 @@ public class SpecializationEntity {
         return Objects.hash(id, specializationName);
     }
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "specializationBySpecializationId")
     public Collection<ShopEntity> getShopsById() {
         return shopsById;

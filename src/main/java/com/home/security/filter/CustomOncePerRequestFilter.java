@@ -40,16 +40,20 @@ public class CustomOncePerRequestFilter extends OncePerRequestFilter {
             username = jwtUtil.extractUserName(jwt);
         }
 
-		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-			if (jwtUtil.validateToken(jwt, userDetails)) {
-				UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(userDetails, null,
-						userDetails.getAuthorities());
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+//            UserDetails userDetails =customUserDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = jwtUtil.getJwtUserFromToken(jwt);
+            if(jwtUtil.validateToken(jwt,userDetails,request)){
+                UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(
+                        userDetails,null,userDetails.getAuthorities()
+                );
 
-				upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				SecurityContextHolder.getContext().setAuthentication(upat);
-			}
-		}
-		filterChain.doFilter(request, response);
-	}
+                upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(upat);
+            }else {
+
+            }
+        }
+        filterChain.doFilter(request,response);
+    }
 }

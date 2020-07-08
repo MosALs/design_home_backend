@@ -129,7 +129,6 @@ public class ShopProductEntity {
         this.productByProductId = productByProductId;
     }
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "shop_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public ShopEntity getShopByShopId() {

@@ -29,6 +29,14 @@ public class CustomUserDetails implements UserDetails {
         this.role = new SimpleGrantedAuthority(appUser.getUserRoleByUserRoleId().getUserRoleName());
     }
 
+
+    public CustomUserDetails(String userName, String password, boolean active, SimpleGrantedAuthority role) {
+        this.userName = userName;
+        this.password = password;
+//        this.active = active;
+        this.role = role;
+    }
+
     public CustomUserDetails(){}
 
     @Override

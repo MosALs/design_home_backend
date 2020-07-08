@@ -61,7 +61,6 @@ public class AreasEntity {
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "governorat_id", referencedColumnName = "id" ,insertable= false , updatable= false)
-    @JsonBackReference
     public GovernoratEntity getGovernoratByGovernoratId() {
         return governoratByGovernoratId;
     }
@@ -71,8 +70,6 @@ public class AreasEntity {
     }
 
     @OneToMany(mappedBy = "areasByAreaId",fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @JsonIgnore
     public List<LocationEntity> getLocationsById() {
         return locationsById;
     }
