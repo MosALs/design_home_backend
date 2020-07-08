@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.home.Entity.Specialization;
 import com.home.Repository.SpecializationRepository;
+import com.home.entities.SpecializationEntity;
 
 @Service
 public class SpecializationServiceImp implements SpecializationService {
@@ -15,33 +16,42 @@ public class SpecializationServiceImp implements SpecializationService {
 	private SpecializationRepository specializationRepository;
 
 	@Override
-	public void save(Specialization specialization) {
-		// TODO Auto-generated method stub
-
+	public int save(SpecializationEntity specializationEntity) {
+		specializationRepository.save(specializationEntity);
+		return 0;
 	}
 
 	@Override
-	public Specialization Modify(int id) {
-		// TODO Auto-generated method stub
+	public List<SpecializationEntity> getAllspecialization() {
+		specializationRepository.findAll();
 		return null;
 	}
 
 	@Override
-	public Specialization delete(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public int getBySpecializationID(int id) {
+		specializationRepository.findById(id);
+		return 0;
 	}
 
 	@Override
-	public List<Specialization> getAllSpecialization() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getBySpecializationName(String specializationName) {
+		specializationRepository.findBySpecializationName(specializationName);
+		return 0;
 	}
 
 	@Override
-	public List<Specialization> searchSpecializationByNmae(String specializationName) {
-		// TODO Auto-generated method stub
-		return null;
+	public int deleteBySpecializationID(int id) {
+		specializationRepository.deleteById(id);
+		return 0;
 	}
+
+	@Override
+	public int ModifyBySpecializationName(String newspecializationName, String oldspecializationName) {
+	 specializationRepository.updateSpecialization(newspecializationName, oldspecializationName);
+		return 0;
+	}
+
+
+	
 
 }

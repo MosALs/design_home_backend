@@ -40,7 +40,7 @@ public class AccountTypeServiceImp implements AccountTypeService {
 
 	@Override
 	public int ModifyByAccountType(String newAccountType, String oldAccountType) {
-		return accountTypeRepository.updateArea(newAccountType, oldAccountType);
+		return accountTypeRepository.updateAccountTypeName(newAccountType, oldAccountType);
 	}
 
 	@Override

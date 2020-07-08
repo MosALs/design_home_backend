@@ -138,7 +138,7 @@ public class ShopEntity {
         return Objects.hash(id, userId, shopName, specializationId, locationId, street, active, startDate, accountTypeId);
     }
 
-    @JsonBackReference
+    @JsonBackReference("user-shop")
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public AppUserEntity getAppUserByUserId() {

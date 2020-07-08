@@ -10,6 +10,7 @@ import com.home.DTO.SearchCriteriaDto;
 import com.home.DTO.SearchResultDTO;
 import com.home.DTO.UserRegisterationDto;
 import com.home.Entity.AppUser;
+import com.home.entities.AppUserEntity;
 
 @Service
 public interface AppUserService {
@@ -25,6 +26,8 @@ public interface AppUserService {
 
 	DetailedSearchDTO findBySearchCriteria(SearchCriteriaDto caseCriteria);
 
+	ResponseEntity<?> add(UserRegisterationDto dto);
+	int  saveone(AppUserEntity appUserEntity);
 
 	
 

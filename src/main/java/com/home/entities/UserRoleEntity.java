@@ -50,7 +50,7 @@ public class UserRoleEntity {
     }
 
     @OneToMany(mappedBy = "userRoleByUserRoleId")
-    @JsonManagedReference
+//    @JsonManagedReference
     public Collection<AppUserEntity> getAppUsersById() {
         return appUsersById;
     }

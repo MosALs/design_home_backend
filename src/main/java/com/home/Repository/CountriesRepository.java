@@ -11,9 +11,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.home.Entity.Countries;
+import com.home.entities.CountriesEntity;
 
 @Repository
-public interface CountriesRepository extends JpaRepository<Countries, Integer> {
+public interface CountriesRepository extends JpaRepository<CountriesEntity, Integer> {
 
 	// upDate
 	@Modifying()
@@ -23,6 +24,6 @@ public interface CountriesRepository extends JpaRepository<Countries, Integer> {
 
 	// like
 	@Query("select c from Countries c where c.countryName like '%countryName%'")
-	List<Countries> findCountriesBYcountryName(@Param("countryName") String countryName);
+	List<CountriesEntity> findCountriesBYcountryName(@Param("countryName") String countryName);
 
 }

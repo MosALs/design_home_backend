@@ -13,9 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.home.DTO.SearchResultDTO;
 import com.home.Entity.AppUser;
+import com.home.entities.AppUserEntity;
 
 @Repository
-public interface AppUserRepository extends JpaRepository<AppUser, Integer>, JpaSpecificationExecutor {
+public interface AppUserRepository extends JpaRepository<AppUserEntity, Integer>, JpaSpecificationExecutor {
 
 	@Query(value = "select a.area_name ,s.specialization_name, u.user_name ,u.user_mobile , u.account_type "
 			+ "from address addr  inner join\n"
@@ -25,8 +26,6 @@ public interface AppUserRepository extends JpaRepository<AppUser, Integer>, JpaS
 			+ "s.specialization_name= :specialization_name", nativeQuery = true)
 	List<SearchResultDTO> search(@Param("area_name") String areaName, @Param("account_type") String accountType,
 			@Param("specialization_name") String specializationName);
-
-
 
 	// بحث شامل
 	/*
@@ -39,14 +38,14 @@ public interface AppUserRepository extends JpaRepository<AppUser, Integer>, JpaS
 	 */
 	@Transactional
 	@Procedure(procedureName = "selectAllUser")
-	List<AppUser>searchALL(@Param("area_name") String areaName, @Param("account_type") String
-			accountType,@Param("specialization_name") String 
-			specializationName, @Param("governorat_name")String governoratName);
+	List<AppUser> searchALL(@Param("area_name") String areaName, @Param("account_type") String accountType,
+			@Param("specialization_name") String specializationName, @Param("governorat_name") String governoratName);
 
-	AppUser findByUserNameAndPassword(String userName, String password);
+	// AppUser findByUserNameAndPassword(String userName, String password);
+	AppUserEntity findByUserNameAndPassword(String userName, String password);
 
-	AppUser findByUserMobileAndPassword(String userMobile, String password);
-	
+	// AppUser findByUserMobileAndPassword(String userMobile, String password);
+	AppUserEntity findByUserMobileAndPassword(String userMobile, String password);
 
 	Optional<AppUser> findByUserName(String userName);
 

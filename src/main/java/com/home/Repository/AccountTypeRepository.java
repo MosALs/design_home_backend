@@ -11,13 +11,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountTypeRepository extends JpaRepository<AccountTypeEntity,Integer> {
-
+public interface AccountTypeRepository extends JpaRepository<AccountTypeEntity, Integer> {
 
 	@Modifying()
+	// اى حاجه تحصل مع الداتا بيز
 	@Transactional
-	@Query(value = "UPDATE account_type acc SET acc.accountTypeName=:newAccountType WHERE acc.accountTypeName=:oldAccountType",nativeQuery =true)
-	int updateArea(@Param("newAccountType") String newAccountType, @Param("oldAccountType") String oldAccountType);
+	@Query(value = "UPDATE account_type acc SET acc.accountTypeName=:newAccountType WHERE acc.accountTypeName=:oldAccountType", nativeQuery = true)
+	int updateAccountTypeName(@Param("newAccountType") String newAccountType,
+			@Param("oldAccountType") String oldAccountType);
 
+	AccountTypeEntity findByAccountTypeName(String accountTypeName);
 
 }

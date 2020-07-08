@@ -4,19 +4,22 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.home.Entity.Specialization;
+import com.home.entities.SpecializationEntity;
 
 @Service
 public interface SpecializationService {
 
-	void save(Specialization specialization);
+	int save(SpecializationEntity specializationEntity);
 
-	public Specialization Modify(int id);
+	 List<SpecializationEntity> getAllspecialization();
+	 
+	int getBySpecializationID(int id);
+	
+	int getBySpecializationName(String specializationName);
 
-	Specialization delete(int id);
+	int deleteBySpecializationID(int id);
 
-	List<Specialization> getAllSpecialization();
+	int ModifyBySpecializationName(String newspecializationName, String oldspecializationName);
 
-	List<Specialization> searchSpecializationByNmae(String specializationName);
 
 }

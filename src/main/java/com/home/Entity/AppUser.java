@@ -45,7 +45,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     , @NamedQuery(name = "AppUser.findByUserMobile", query = "SELECT a FROM AppUser a WHERE a.userMobile = :userMobile")
     , @NamedQuery(name = "AppUser.findByUserHours", query = "SELECT a FROM AppUser a WHERE a.userHours = :userHours")
     , @NamedQuery(name = "AppUser.findByUserGender", query = "SELECT a FROM AppUser a WHERE a.userGender = :userGender")
-    , @NamedQuery(name = "AppUser.findByAccountType", query = "SELECT a FROM AppUser a WHERE a.accountType = :accountType")
     , @NamedQuery(name = "AppUser.findByTradeName", query = "SELECT a FROM AppUser a WHERE a.tradeName = :tradeName")
     , @NamedQuery(name = "AppUser.findByTradeMobileNumber", query = "SELECT a FROM AppUser a WHERE a.tradeMobileNumber = :tradeMobileNumber")
     , @NamedQuery(name = "AppUser.findByWholesaleretailsale", query = "SELECT a FROM AppUser a WHERE a.wholesaleretailsale = :wholesaleretailsale")
@@ -80,11 +79,6 @@ public class AppUser implements Serializable {
     @Size(max = 8)
     @Column(name = "user_gender", length = 8)
     private String userGender;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "account_type", nullable = false, length = 30)
-    private String accountType;
     @Size(max = 2147483647)
     @Column(name = "trade_name", length = 2147483647)
     private String tradeName;
@@ -127,10 +121,10 @@ public class AppUser implements Serializable {
         this.id = id;
     }
 
-    public AppUser(Integer id, String userMobile, String accountType, String password) {
+    public AppUser(Integer id, String userMobile, String password) {
         this.id = id;
         this.userMobile = userMobile;
-        this.accountType = accountType;
+       
         this.password = password;
     }
 
@@ -190,13 +184,6 @@ public class AppUser implements Serializable {
         this.userGender = userGender;
     }
 
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
 
     public String getTradeName() {
         return tradeName;
