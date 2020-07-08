@@ -25,13 +25,13 @@ public class SearchController {
 	@Autowired
 	private com.home.services.AppUserService usersEntityService;
 
-	@GetMapping(value = "/result")
-	public List<SearchResultDTO> search(@RequestParam("area_name") String areaName,
-			@RequestParam("account_type") String accountType,
-			@RequestParam("specialization_name") String specializationName) {
-
-		return usersService.search(areaName, accountType, specializationName);
-	}
+//	@GetMapping(value = "/result")
+//	public List<SearchResultDTO> search(@RequestParam("area_name") String areaName,
+//			@RequestParam("account_type") String accountType,
+//			@RequestParam("specialization_name") String specializationName) {
+//
+//		return usersService.search(areaName, accountType, specializationName);
+//	}
 
 	@GetMapping(value = "/result/all")
 	public List<AppUser> searchALL(@RequestParam("area_name") String areaName, @RequestParam("account_type") String accountType,
