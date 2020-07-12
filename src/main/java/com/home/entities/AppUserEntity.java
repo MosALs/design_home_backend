@@ -1,8 +1,24 @@
 package com.home.entities;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Objects;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.home.jsonfilter.View;
-
 @Entity
 @Table(name = "app_user", schema = "dbo", catalog = "kmgnew")
 public class AppUserEntity {
@@ -227,7 +243,7 @@ public class AppUserEntity {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, userName, userMobile, userHours, specializationId, userGender, accountType, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
+        int result = Objects.hash(id, name, userName, userMobile, userHours, userGender, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
         result = 31 * result + Arrays.hashCode(userImage);
         return result;
     }

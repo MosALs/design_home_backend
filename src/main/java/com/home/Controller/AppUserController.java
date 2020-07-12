@@ -1,10 +1,5 @@
 package com.home.Controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.home.entities.AppUserEntity;
-import com.home.jsonfilter.View;
-import com.home.repositories.AppUserRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +21,7 @@ import com.home.DTO.UserRegisterationDto;
 import com.home.Service.AppUserService;
 import com.home.entities.AppUserEntity;
 import com.home.jsonfilter.View;
+import com.home.repositories.AppUserRepository;
 
 @RestController
 @RequestMapping(value = "/rest/user")
@@ -34,7 +30,7 @@ public class AppUserController {
 	// localhost:8080/rest/uset/login?userData=bbb&password=123&&userMobile=123456
 
 	@Autowired
-	private AppUserService usersService;
+	private AppUserService userService;
 
     @Autowired
     private AppUserRepository appUserRepository;
@@ -71,11 +67,7 @@ public class AppUserController {
 		return appUserEntityService.getUserSummary(id);
 	}
 
-    @JsonView(View.AuthenticateInfo.class)
-    @GetMapping(value = "/userSummary/{id}")
-    public Optional<AppUserEntity> getUserSummart(@PathVariable int id){
-        return appUserEntityService.getUserSummary(id);
-    }
+  
 
     @PostMapping(value = "/save")
     public ResponseEntity<?> saveAppUser(@RequestBody AppUserEntity appUserEntity){
