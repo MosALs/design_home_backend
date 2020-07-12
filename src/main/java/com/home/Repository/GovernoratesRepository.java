@@ -18,8 +18,7 @@ public interface GovernoratesRepository extends JpaRepository<GovernoratEntity, 
 	
 	@Modifying()
 	@Transactional
-	@Query(value = "UPDATE governorat g SET g.governoratName=:newgovernoratName WHERE g.governoratName=:oldgovernoratName")
-	
+	@Query(value = "UPDATE governorat g SET g.governoratName=:newgovernoratName WHERE g.governoratName=:oldgovernoratName",nativeQuery = true)
 	int updateGovernorat(@Param("newgovernoratName") String newgovernoratName, @Param("oldgovernoratName") String oldgovernoratName);
 
 	void findBygovernoratName(String governoratName);
