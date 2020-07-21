@@ -19,8 +19,12 @@ public class JwtUtil {
     private String SECRET_KEY = "kmgsecret";
 
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(CustomUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+//        claims.put("username",userDetails.getUsername());
+        claims.put("active",userDetails.isActive());
+        claims.put("role",userDetails.getRole());
+
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
@@ -44,7 +48,8 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return claims;
     }
 
 
@@ -82,6 +87,11 @@ public class JwtUtil {
     }
 
     public UserDetails getJwtUserFromToken(String token) {
-        return new CustomUserDetails(extractUserName(token), null, true, extractRoleFromToken(token));
+        return new CustomUserDetails(extractUserName(token), null, extractUserStatusFromToken(token), extractRoleFromToken(token));
+    }
+
+    private boolean extractUserStatusFromToken(String token) {
+        boolean status = (Boolean) extractAllClaimsFromToken(token).get("role");
+        return status;
     }
 }
