@@ -36,7 +36,7 @@ public class AppUserEntity {
     private String websiteLink;
     @JsonView(View.AuthenticateInfo.class)
     private String password;
-    @JsonView(View.AuthenticateInfo.class)
+//    @JsonView(View.AuthenticateInfo.class)
     private boolean active;
     private int userRoleId;
     private String facbookLink;
