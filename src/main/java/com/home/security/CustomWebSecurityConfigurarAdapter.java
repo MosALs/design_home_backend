@@ -16,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+// EnableWebSecurity annotation tells spring container that this class is security configuration class.
 @EnableWebSecurity
 public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAdapter {
 
@@ -25,6 +27,7 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
     @Autowired
     CustomOncePerRequestFilter customOncePerRequestFilter;
 
+    // my custom authentication configuration.(login)
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         System.out.println("KMG == configure(AuthenticationManagerBuilder auth)");
@@ -32,11 +35,14 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
                 .passwordEncoder(passwordEncoderBean());
     }
 
+    // spring security framework assumes that you have password encoder in your application
+    // so you must provide password encoder bean when you are using custom configuration.
     @Bean
     public PasswordEncoder passwordEncoderBean() {
         return new BCryptPasswordEncoder();
     }
 
+    // my custom authorization configuration.
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         System.out.println("KMG == configure(HttpSecurity http)");

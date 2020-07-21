@@ -2,11 +2,11 @@ package com.home.Service;
 
 import java.util.List;
 
-import com.home.entities.AreasEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.home.Repository.AreasRepository;
+import com.home.entities.AreasEntity;
 
 @Service
 public class AreasServiceImp implements AreasService {
@@ -16,8 +16,8 @@ public class AreasServiceImp implements AreasService {
 
 	@Override
 	public List<AreasEntity> getAll() {
-			System.out.println("asd");
-	
+		System.out.println("asd");
+
 		return areasRepository.findAll();
 	}
 
@@ -31,47 +31,22 @@ public class AreasServiceImp implements AreasService {
 		return areasRepository.findByAreaName(areaName);
 	}
 
-//	@Override
-//	public List<Governorates_AreasDTO> getBYName() {
-//		// TODO Auto-generated method stub
-//		return areasRepository.findInfo();
-//	}
-//
-//	@Override
-//	public List<Areas> getByGovernate(int governorate_id) {
-//		// TODO Auto-generated method stub
-//		return areasRepository.findByGovernorateId(governorate_id);
-//	}
-//
+	@Override
+	public int save(AreasEntity areasEntity) {
+		areasRepository.save(areasEntity);
+		return 0;
+	}
 
-//	@Override
-//	public boolean save(AreasEntity areas) {
-//
-//		return areasRepository.save(areas) != null;
-//	}
-//
-//	@Override
-//	public Areas delete(Areas areas) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public void deleteAreas(int id) {
-//		 areasRepository.deleteById(id);
-//
-//	}
-//
-//	@Override
-//	public int Modify(String newAreaName, String oldAreaName) {
-//		return areasRepository.updateArea(newAreaName, oldAreaName);
-//
-//	}
+	@Override
+	public int Modify(String newAreaName, String oldAreaName) {
+		areasRepository.updateArea(newAreaName, oldAreaName);
+		return 0;
+	}
 
+	@Override
+	public int deleteAreas(int id) {
+		areasRepository.deleteById(id);
+		return 0;
+	}
 
 }
-
-
-
-
-

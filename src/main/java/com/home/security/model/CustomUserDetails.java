@@ -26,7 +26,7 @@ public class CustomUserDetails implements UserDetails {
 //        this.roles = Arrays.stream(appUser.getUserRoleByUserRoleId())
 //                .map(SimpleGrantedAuthority::new)
 //                .collect(Collectors.toList());
-//        this.role = new SimpleGrantedAuthority(appUser.getUserRoleByUserRoleId().getUserRoleName());
+        this.role = new SimpleGrantedAuthority(appUser.getUserRoleByUserRoleId().getUserRoleName());
     }
 
 

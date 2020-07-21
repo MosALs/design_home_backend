@@ -1,13 +1,24 @@
 package com.home.entities;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.home.jsonfilter.View;
-
-import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.home.jsonfilter.View;
 @Entity
 @Table(name = "app_user", schema = "dbo", catalog = "kmgnew")
 public class AppUserEntity {
@@ -24,11 +35,8 @@ public class AppUserEntity {
     private byte[] userImage;
     @JsonView(View.SearchCriteriaInfo.class)
     private String userHours;
-//    @JsonView(View.SearchCriteriaInfo.class)
-    private Integer specializationId;
     @JsonView(View.SearchCriteriaInfo.class)
     private String userGender;
-//    private String accountType;
     private String tradeName;
     private String tradeMobileNumber;
     private String wholeRetailSale;
@@ -107,15 +115,6 @@ public class AppUserEntity {
         this.userHours = userHours;
     }
 
-    @Basic
-    @Column(name = "specialization_id")
-    public Integer getSpecializationId() {
-        return specializationId;
-    }
-
-    public void setSpecializationId(Integer specializationId) {
-        this.specializationId = specializationId;
-    }
 
     @Basic
     @Column(name = "user_gender")
@@ -231,7 +230,7 @@ public class AppUserEntity {
                 Objects.equals(userMobile, that.userMobile) &&
                 Arrays.equals(userImage, that.userImage) &&
                 Objects.equals(userHours, that.userHours) &&
-                Objects.equals(specializationId, that.specializationId) &&
+              //  Objects.equals(specializationId, that.specializationId) &&
                 Objects.equals(userGender, that.userGender) &&
                 Objects.equals(tradeName, that.tradeName) &&
                 Objects.equals(tradeMobileNumber, that.tradeMobileNumber) &&
@@ -244,13 +243,14 @@ public class AppUserEntity {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, userName, userMobile, userHours, specializationId, userGender,  tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
+        int result = Objects.hash(id, name, userName, userMobile, userHours, userGender, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
         result = 31 * result + Arrays.hashCode(userImage);
         return result;
     }
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_role_id", referencedColumnName = "id",nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "user_role_id", referencedColumnName = "id", nullable = false,insertable= false , updatable= false)
     public UserRoleEntity getUserRoleByUserRoleId() {
         return userRoleByUserRoleId;
     }

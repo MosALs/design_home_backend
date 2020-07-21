@@ -5,18 +5,19 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.home.Entity.Governorates;
+import com.home.entities.GovernoratEntity;
 
 @Service
 public interface GovernoratesService {
 
-	void save(Governorates governorates);
+	int save(GovernoratEntity governoratEntity);
 
-	public Governorates Modify(int id);
+    int ModifyByGovernoratName(String newgovernoratName,String oldgovernoratName);
 
-	Governorates delete(int id);
+	int deleteByGovernoratId(int id);
 
-	List<Governorates> getAllGovernorates();
+	List<GovernoratEntity> getAllGovernorates();
 
-	List<Governorates> searchGovernoratesByName(String governoratName);
+	List<GovernoratEntity> searchGovernoratesByName(String governoratName);
 
 }

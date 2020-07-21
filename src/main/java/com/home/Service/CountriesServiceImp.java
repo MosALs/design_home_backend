@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.home.Entity.Countries;
 import com.home.Repository.CountriesRepository;
+import com.home.entities.CountriesEntity;
 @Service
 public class CountriesServiceImp implements CountriesService{
 
@@ -14,9 +15,9 @@ public class CountriesServiceImp implements CountriesService{
 	private CountriesRepository countriesRepository;
 
 	@Override
-	public boolean save(Countries countries) {
+	public boolean save(CountriesEntity countriesEntity) {
 		
-		return countriesRepository.save(countries)!= null;
+		return countriesRepository.save(countriesEntity)!= null;
 	}
 
 	@Override
@@ -32,13 +33,13 @@ public class CountriesServiceImp implements CountriesService{
 	}
 
 	@Override
-	public List<Countries> getAllCountries() {
+	public List<CountriesEntity> getAllCountries() {
 		return countriesRepository.findAll();
 	
 	}
 
 	@Override
-	public List<Countries> searchCountriesByName(String countryName) {
+	public List<CountriesEntity> searchCountriesByName(String countryName) {
 		
 		return countriesRepository.findCountriesBYcountryName(countryName);
 	}
