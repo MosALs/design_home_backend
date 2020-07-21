@@ -2,6 +2,7 @@ package com.home.security.controller;
 
 import com.home.security.Util.JwtUtil;
 import com.home.security.model.AuthenticationResponse;
+import com.home.security.model.CustomUserDetails;
 import com.home.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,9 +37,9 @@ public class AuthenticationController {
 	public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 		System.out.println("KMG == AuthenticationController.authenticate().first row");
 
-		checkAuthentication(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		ResponseEntity<?> responseEntity = checkAuthentication(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-		UserDetails userDetails = customUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		if (userDetails == null){
 			System.out.println("KMG == AuthenticationController.authenticate() == inside if (userDetails == null)");
 			return new ResponseEntity<>("Username : "+  authenticationRequest.getUsername() + " is not found in our records",HttpStatus.NOT_FOUND);
