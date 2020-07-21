@@ -75,4 +75,40 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
+
+    public SimpleGrantedAuthority getRole() {
+        return role;
+    }
+
+    public void setRole(SimpleGrantedAuthority role) {
+        this.role = role;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<GrantedAuthority> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<GrantedAuthority> roles) {
+        this.roles = roles;
+    }
 }
