@@ -46,7 +46,7 @@ public class AppUserEntity {
     private String password;
 //    @JsonView(View.AuthenticateInfo.class)
     private boolean active;
-    private int userRoleId;
+//    private int userRoleId;
     private String facbookLink;
     @JsonView(View.AuthenticateInfo.class)
     private UserRoleEntity userRoleByUserRoleId;
@@ -197,15 +197,15 @@ public class AppUserEntity {
         this.active = active;
     }
 
-    @Basic
-    @Column(name = "user_role_id")
-    public int getUserRoleId() {
-        return userRoleId;
-    }
-
-    public void setUserRoleId(int userRoleId) {
-        this.userRoleId = userRoleId;
-    }
+//    @Basic
+//    @Column(name = "user_role_id")
+//    public int getUserRoleId() {
+//        return userRoleId;
+//    }
+//
+//    public void setUserRoleId(int userRoleId) {
+//        this.userRoleId = userRoleId;
+//    }
 
     @Basic
     @Column(name = "facbook_link")
@@ -224,13 +224,12 @@ public class AppUserEntity {
         AppUserEntity that = (AppUserEntity) o;
         return id == that.id &&
                 active == that.active &&
-                userRoleId == that.userRoleId &&
+//                userRoleId == that.userRoleId &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(userName, that.userName) &&
                 Objects.equals(userMobile, that.userMobile) &&
                 Arrays.equals(userImage, that.userImage) &&
                 Objects.equals(userHours, that.userHours) &&
-              //  Objects.equals(specializationId, that.specializationId) &&
                 Objects.equals(userGender, that.userGender) &&
                 Objects.equals(tradeName, that.tradeName) &&
                 Objects.equals(tradeMobileNumber, that.tradeMobileNumber) &&
@@ -243,14 +242,14 @@ public class AppUserEntity {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, userName, userMobile, userHours, userGender, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, userRoleId, facbookLink);
+        int result = Objects.hash(id, name, userName, userMobile, userHours, userGender, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, facbookLink);
         result = 31 * result + Arrays.hashCode(userImage);
         return result;
     }
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_role_id", referencedColumnName = "id", nullable = false,insertable= false , updatable= false)
+    @JoinColumn(name = "user_role_id", referencedColumnName = "id", nullable = false, updatable= false)
     public UserRoleEntity getUserRoleByUserRoleId() {
         return userRoleByUserRoleId;
     }
@@ -276,4 +275,20 @@ public class AppUserEntity {
     public void setWorkOrdersById(Collection<WorkOrderEntity> workOrdersById) {
         this.workOrdersById = workOrdersById;
     }
+
+	@Override
+	public String toString() {
+		return "AppUserEntity [id=" + id + ", name=" + name + ", userName=" + userName + ", userMobile=" + userMobile
+				+ ", userImage=" + Arrays.toString(userImage) + ", userHours=" + userHours + ", userGender="
+				+ userGender + ", tradeName=" + tradeName + ", tradeMobileNumber=" + tradeMobileNumber
+				+ ", wholeRetailSale=" + wholeRetailSale + ", deliveryNoDelivery=" + deliveryNoDelivery
+				+ ", websiteLink=" + websiteLink + ", password=" + password + ", active=" + active + ", facbookLink="
+				+ facbookLink + ", userRoleByUserRoleId=" + userRoleByUserRoleId + ", shopsById=" + shopsById
+				+ ", workOrdersById=" + workOrdersById + "]";
+	}
+    
+
+	
+    
+    
 }

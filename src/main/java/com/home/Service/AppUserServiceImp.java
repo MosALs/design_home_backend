@@ -12,7 +12,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.home.DTO.SearchResultDTO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,12 +25,16 @@ import com.home.DTO.SearchCriteriaDto;
 import com.home.DTO.UserRegisterationDto;
 import com.home.Entity.Address;
 import com.home.Entity.AppUser;
+import com.home.Repository.AccountTypeRepository;
 import com.home.Repository.AppUserRepository;
+import com.home.Repository.AreasRepository;
 import com.home.Repository.LocationRepository;
 import com.home.Repository.ShopRepository;
+import com.home.Repository.SpecializationRepository;
 import com.home.Repository.UserRoleRepository;
 import com.home.entities.AccountTypeEntity;
 import com.home.entities.AppUserEntity;
+import com.home.entities.AreasEntity;
 import com.home.entities.LocationEntity;
 import com.home.entities.ShopEntity;
 import com.home.entities.SpecializationEntity;
@@ -50,6 +53,12 @@ public class AppUserServiceImp implements AppUserService {
 	ShopRepository shopRepository;
 	@Autowired
 	UserRoleRepository userRoleRepository;
+	@Autowired
+	AreasRepository areasRepository;
+	@Autowired
+	AccountTypeRepository accountTypeRepository;
+	@Autowired
+	SpecializationRepository specializationRepository;
 
 	@Override
 	public int deleteUser(int id) {
@@ -63,7 +72,6 @@ public class AppUserServiceImp implements AppUserService {
 ////		return appUsersRepository.search(areaName, accountType, specializationName);
 //	}
 
-	
 	@Override
 	public ResponseEntity<?> login(String userData, String password) {
 		String userName = null;
@@ -95,47 +103,102 @@ public class AppUserServiceImp implements AppUserService {
 
 	@Override
 	public ResponseEntity<?> save(UserRegisterationDto userDto) {
+		AreasEntity areaEntity = userDto.getAreasEntity();
 		AppUserEntity appUserEntity = userDto.getAppUserEntity();
-		ShopEntity shopEntity = userDto.getShopEntity();
+		ShopEntity shopEntityone = userDto.getShopEntity();
 		SpecializationEntity specializationEntity = userDto.getSpecializationEntity();
 		AccountTypeEntity accountTypeEntity = userDto.getAccountTypeEntity();
 		LocationEntity locationEntity = userDto.getLocationEntity();
 
-		int userRoleId = 0;
-		if (accountTypeEntity != null) {
-			String accountTypeName = accountTypeEntity.getAccountTypeName();
-			UserRoleEntity userRoleEntity = userRoleRepository.findByUserRoleName(accountTypeName);
-			userRoleId = userRoleEntity.getId();
-
-		}
-
-		int appUserId = 0;
 		if (appUserEntity != null) {
-			if (appUserEntity.getPassword().length() < 8) {
-				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Please enter the secret number 8");
+			UserRoleEntity ure = null;
+			if (accountTypeEntity != null) {
+				String accountTypeName = accountTypeEntity.getAccountTypeName();
+				accountTypeEntity = accountTypeRepository.findByAccountTypeName(accountTypeName);
+				ure = userRoleRepository.findByUserRoleName(accountTypeName);
+				appUserEntity.setUserRoleByUserRoleId(ure);
+				appUserEntity.setUserRoleByUserRoleId(ure);
+				appUserEntity = appUsersRepository.save(appUserEntity);
+				if (areaEntity == null) {
+					throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "you should enter your area");
+				} else {
+
+					String areaName = areaEntity.getAreaName();
+					AreasEntity areasEntity = areasRepository.findByAreaName(areaName);
+					if (locationEntity == null) {
+						throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+								"you should enter your location");
+					} else {
+						locationEntity.setAreasByAreaId(areasEntity);
+						if (locationEntity.getLocationName() == null) {
+							throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+									"you should enter your location name");
+						} else {
+							LocationEntity locationEnt = locationRepository.save(locationEntity);
+
+							ShopEntity shopEntity = new ShopEntity();
+							if (accountTypeEntity != null)
+
+								if (!accountTypeName.equals("محل") || !accountTypeName.equals("شركه")) {
+
+									if (accountTypeName.equals("عميل")) {
+										specializationEntity = specializationRepository
+												.findBySpecializationName("عميل");
+										shopEntity.setSpecializationBySpecializationId(specializationEntity);
+
+									} else if (accountTypeName.equals("صنايعى")) {
+										SpecializationEntity entity = checkSpecializationType(specializationEntity);
+										shopEntity.setSpecializationBySpecializationId(entity);
+
+									}
+									shopEntity.setShopName(null);
+									shopEntity.setStartDate(null);
+									shopEntity.setStreet(null);
+
+								} else {
+									SpecializationEntity entity = checkSpecializationType(specializationEntity);
+									shopEntity.setSpecializationBySpecializationId(entity);
+									shopEntity.setShopName(shopEntityone.getShopName());
+									shopEntity.setStartDate(shopEntityone.getStartDate());
+									shopEntity.setStreet(shopEntityone.getStreet());
+								}
+							shopEntity.setUserId(appUserEntity.getId());
+							shopEntity.setAccountTypeId(accountTypeEntity.getId());
+							//shopEntity.setSpecializationId(specializationEntity.getId());
+							shopEntity.setLocationId(locationEntity.getId());
+							
+							shopRepository.save(shopEntity);
+						}
+						
+					}
+				
+				}
+			
 			}
-
-			if (appUserEntity.getUserMobile().length() < 11) {
-				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Please enter the phone number");
-			}
-
-			appUserEntity.setId(userRoleId);
-			appUserEntity = appUsersRepository.save(appUserEntity);
-			appUserId = appUserEntity.getId();
-
+			
 		}
-		if (shopEntity != null) {
-			shopEntity.setAppUserByUserId(appUserEntity);
-			shopEntity.setAccountTypeByAccountTypeId(accountTypeEntity);
-			shopEntity.setLocationByLocationId(locationEntity);
-			shopEntity.setSpecializationBySpecializationId(specializationEntity);
-			shopRepository.save(shopEntity);
-			return new ResponseEntity<>(appUserEntity, HttpStatus.OK);
+		throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+				"you should enter your location");
 
-		} else {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "user is not saved successfully");
-		}
 	}
+
+	public SpecializationEntity checkSpecializationType(SpecializationEntity specializationEntity) {
+
+		SpecializationEntity entity= new SpecializationEntity();
+		if (specializationEntity.getSpecializationName().equals("سباك")) {
+			entity = specializationRepository.findBySpecializationName("سباك");
+		}
+		if (specializationEntity.getSpecializationName().equals("نجار")) {
+			entity = specializationRepository.findBySpecializationName("نجار");
+		}
+		if (specializationEntity.getSpecializationName().equals("سيراميك")) {
+			entity = specializationRepository.findBySpecializationName("سيراميك");
+		}
+		
+		return entity;
+
+	}
+
 
 	@Override
 	public List<AppUser> searchAll(String areaName, String accountType, String specializationName,
@@ -212,12 +275,12 @@ public class AppUserServiceImp implements AppUserService {
 			if (appUserEntity.getUserMobile().length() < 11) {
 				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Please enter the phone number");
 			}
-			
+
 			appUserEntity = appUsersRepository.save(appUserEntity);
-	}
+		}
 		return null;
 
-}
+	}
 
 	@Override
 	public int saveone(AppUserEntity appUserEntity) {
@@ -226,4 +289,3 @@ public class AppUserServiceImp implements AppUserService {
 		return 0;
 	}
 }
-

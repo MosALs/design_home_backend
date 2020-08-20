@@ -59,4 +59,12 @@ public class AccountTypeEntity {
     public void setShopsById(Collection<ShopEntity> shopsById) {
         this.shopsById = shopsById;
     }
+
+	@Override
+	public String toString() {
+		return "AccountTypeEntity [id=" + id + ", accountTypeName=" + accountTypeName + ", shopsById=" + shopsById
+				+ "]";
+	}
+    
+    
 }

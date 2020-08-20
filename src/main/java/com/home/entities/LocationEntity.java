@@ -1,21 +1,25 @@
 package com.home.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "location", schema = "dbo", catalog = "kmgnew")
 public class LocationEntity {
     private int id;
     private String locationName;
-    private Integer areaId;
+//    private Integer areaId;
     private AreasEntity areasByAreaId;
     private Collection<ShopEntity> shopsById;
 
@@ -39,32 +43,32 @@ public class LocationEntity {
         this.locationName = locationName;
     }
 
-    @Column(name = "area_id")
-    public Integer getAreaId() {
-        return areaId;
-    }
+//    @Column(name = "area_id")
+//    public Integer getAreaId() {
+//        return areaId;
+//    }
 
-    public void setAreaId(Integer areaId) {
-        this.areaId = areaId;
-    }
+//    public void setAreaId(Integer areaId) {
+//        this.areaId = areaId;
+//    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LocationEntity that = (LocationEntity) o;
-        return id == that.id &&
-                Objects.equals(locationName, that.locationName) &&
-                Objects.equals(areaId, that.areaId);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        LocationEntity that = (LocationEntity) o;
+//        return id == that.id &&
+//                Objects.equals(locationName, that.locationName) &&
+//              // Objects.equals(areaId, that.areaId);
+//    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, locationName, areaId);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, locationName, areaId);
+//    }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "area_id",insertable= false , updatable= false)
+    @JoinColumn(name = "area_id" , updatable= true,insertable = true)
     public AreasEntity getAreasByAreaId() {
         return areasByAreaId;
     }

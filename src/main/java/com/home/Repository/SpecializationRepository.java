@@ -19,7 +19,7 @@ public interface SpecializationRepository extends JpaRepository<SpecializationEn
 	@Query(value = "UPDATE specialization s SET s.specializationName=:newspecializationName WHERE s.specializationName=:oldspecializationName",nativeQuery = true)
 	int updateSpecialization(@Param("newspecializationName") String newlocationName, @Param("oldspecializationName") String oldlocationName);
 
-	void findBySpecializationName(String specializationName);
+	SpecializationEntity findBySpecializationName(String specializationName);
 
 	
 

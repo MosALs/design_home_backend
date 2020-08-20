@@ -74,8 +74,8 @@ public class JwtUtil {
         return false;
     }
 
-    public SimpleGrantedAuthority extractRoleFromToken(String token) {
-        return (SimpleGrantedAuthority) extractAllClaimsFromToken(token).get("role");
+    public Object extractRoleFromToken(String token) {
+        return  extractAllClaimsFromToken(token).get("role");
     }
 
     private boolean isTokenExpired(String token) {
@@ -87,7 +87,7 @@ public class JwtUtil {
     }
 
     public UserDetails getJwtUserFromToken(String token) {
-        return new CustomUserDetails(extractUserName(token), null, extractUserStatusFromToken(token), extractRoleFromToken(token));
+        return new CustomUserDetails(extractUserName(token), null, true, null);
     }
 
     private boolean extractUserStatusFromToken(String token) {

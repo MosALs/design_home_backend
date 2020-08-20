@@ -51,6 +51,7 @@ public class AppUserController {
 		}
 	}
 
+	//Register all shop and user
 	@PostMapping(value = "/Register")
 	public ResponseEntity<?> add(@RequestBody UserRegisterationDto user) {
 
@@ -69,14 +70,14 @@ public class AppUserController {
 
   
 
-    @PostMapping(value = "/save")
-    public ResponseEntity<?> saveAppUser(@RequestBody AppUserEntity appUserEntity){
-        if(appUserEntity.getUserRoleId() == 0){
-            return new ResponseEntity<>("user role should not be null",HttpStatus.INTERNAL_SERVER_ERROR);
-        }else{
-            return new ResponseEntity<>(appUserRepository.save(appUserEntity),HttpStatus.OK);
-        }
-    }
+//    @PostMapping(value = "/save")
+//    public ResponseEntity<?> saveAppUser(@RequestBody AppUserEntity appUserEntity){
+//        if(appUserEntity.getUserRoleId() == 0){
+//            return new ResponseEntity<>("user role should not be null",HttpStatus.INTERNAL_SERVER_ERROR);
+//        }else{
+//            return new ResponseEntity<>(appUserRepository.save(appUserEntity),HttpStatus.OK);
+//        }
+//    }
 
 	@RequestMapping(value = "/Add", method = RequestMethod.POST)
 	public ResponseEntity<?> svae(@RequestBody UserRegisterationDto dto) {
@@ -87,9 +88,9 @@ public class AppUserController {
 		}
 	}
 
-	@RequestMapping(value = "/saveone", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int add(@RequestBody AppUserEntity appUserEntity) {
-			usersService.saveone(appUserEntity);
-			return 0;
-	}
+//	@RequestMapping(value = "/saveone", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public int add(@RequestBody AppUserEntity appUserEntity) {
+//			usersService.saveone(appUserEntity);
+//			return 0;
+//	}
 }

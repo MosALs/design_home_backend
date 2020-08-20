@@ -2,6 +2,7 @@ package com.home.DTO;
 
 import com.home.entities.AccountTypeEntity;
 import com.home.entities.AppUserEntity;
+import com.home.entities.AreasEntity;
 import com.home.entities.LocationEntity;
 import com.home.entities.ShopEntity;
 import com.home.entities.SpecializationEntity;
@@ -15,6 +16,9 @@ public class UserRegisterationDto {
 	private LocationEntity locationEntity;
 	private UserRoleEntity userRoleEntity;
 	private ShopEntity shopEntity;
+	private AreasEntity areasEntity;
+	private AccountTypeEntity accountTypeEntity;
+	
 	public AccountTypeEntity getAccountTypeEntity() {
 		return accountTypeEntity;
 	}
@@ -23,7 +27,7 @@ public class UserRegisterationDto {
 		this.accountTypeEntity = accountTypeEntity;
 	}
 
-	private AccountTypeEntity accountTypeEntity;
+	
 	
 	public AppUserEntity getAppUserEntity() {
 		return appUserEntity;
@@ -64,6 +68,15 @@ public class UserRegisterationDto {
 	public void setShopEntity(ShopEntity shopEntity) {
 		this.shopEntity = shopEntity;
 	}
+
+	public AreasEntity getAreasEntity() {
+		return areasEntity;
+	}
+
+	public void setAreasEntity(AreasEntity areasEntity) {
+		this.areasEntity = areasEntity;
+	}
+	
 	
 
 	/*

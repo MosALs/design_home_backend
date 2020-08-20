@@ -1,12 +1,20 @@
 package com.home.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "shop", schema = "dbo", catalog = "kmgnew")
@@ -27,7 +35,9 @@ public class ShopEntity {
     private Collection<ShopProductEntity> shopProductsById;
     private Collection<WorkOrderEntity> workOrdersById;
 
+   
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -138,7 +148,7 @@ public class ShopEntity {
         return Objects.hash(id, userId, shopName, specializationId, locationId, street, active, startDate, accountTypeId);
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public AppUserEntity getAppUserByUserId() {
         return appUserByUserId;
@@ -148,7 +158,7 @@ public class ShopEntity {
         this.appUserByUserId = appUserByUserId;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "specialization_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public SpecializationEntity getSpecializationBySpecializationId() {
         return specializationBySpecializationId;
@@ -168,7 +178,7 @@ public class ShopEntity {
         this.locationByLocationId = locationByLocationId;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_type_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public AccountTypeEntity getAccountTypeByAccountTypeId() {
         return accountTypeByAccountTypeId;
@@ -196,4 +206,17 @@ public class ShopEntity {
     public void setWorkOrdersById(Collection<WorkOrderEntity> workOrdersById) {
         this.workOrdersById = workOrdersById;
     }
+
+	@Override
+	public String toString() {
+		return "ShopEntity [id=" + id + ", userId=" + userId + ", shopName=" + shopName + ", specializationId="
+				+ specializationId + ", locationId=" + locationId + ", street=" + street + ", active=" + active
+				+ ", startDate=" + startDate + ", accountTypeId=" + accountTypeId + ", appUserByUserId="
+				+ appUserByUserId + ", specializationBySpecializationId=" + specializationBySpecializationId
+				+ ", locationByLocationId=" + locationByLocationId + ", accountTypeByAccountTypeId="
+				+ accountTypeByAccountTypeId + ", shopProductsById=" + shopProductsById + ", workOrdersById="
+				+ workOrdersById + "]";
+	}
+    
+    
 }

@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             // if returned user is null
             return null;
         }
-        Optional<UserRoleEntity> userRoleEntity = userRoleRepository.findById(appUser.get().getUserRoleId());
+        Optional<UserRoleEntity> userRoleEntity = userRoleRepository.findById(appUser.get().getUserRoleByUserRoleId().getId());
         String userRoleName = userRoleEntity.get().getUserRoleName();
         SimpleGrantedAuthority role = new SimpleGrantedAuthority(userRoleName);
         // app user is not null.
