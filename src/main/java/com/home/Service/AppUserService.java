@@ -11,13 +11,14 @@ import com.home.DTO.SearchResultDTO;
 import com.home.DTO.UserRegisterationDto;
 import com.home.Entity.AppUser;
 import com.home.entities.AppUserEntity;
+import com.home.util.ReturnedResultModel;
 
 @Service
 public interface AppUserService {
 
 	int deleteUser(int id);
 
-	ResponseEntity<?> save(UserRegisterationDto appUser);
+	ReturnedResultModel save(UserRegisterationDto appUser);
 
 
 	List<AppUser> searchAll(String areaName, String accountType, String specializationName, String governoratName);
@@ -26,8 +27,8 @@ public interface AppUserService {
 
 	DetailedSearchDTO findBySearchCriteria(SearchCriteriaDto caseCriteria);
 
-	ResponseEntity<?> add(UserRegisterationDto dto);
-	int  saveone(AppUserEntity appUserEntity);
+	//ResponseEntity<?> add(UserRegisterationDto dto);
+	//int  saveone(AppUserEntity appUserEntity);
 
 	
 

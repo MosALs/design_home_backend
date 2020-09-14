@@ -22,6 +22,7 @@ import com.home.Service.AppUserService;
 import com.home.entities.AppUserEntity;
 import com.home.jsonfilter.View;
 import com.home.repositories.AppUserRepository;
+import com.home.util.ReturnedResultModel;
 
 @RestController
 @RequestMapping(value = "/rest/user")
@@ -51,17 +52,15 @@ public class AppUserController {
 		}
 	}
 
-	//Register all shop and user
-	@PostMapping(value = "/Register")
-	public ResponseEntity<?> add(@RequestBody UserRegisterationDto user) {
-
-		try {
-			return usersService.save(user);
-		} catch (ResponseStatusException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getStatus());
-		}
-	}
-
+	/*
+	 * //Register all shop and user
+	 * 
+	 * @PostMapping(value = "/Register") public ResponseEntity<?> add(@RequestBody
+	 * UserRegisterationDto user) {
+	 * 
+	 * try { return usersService.save(user); } catch (ResponseStatusException e) {
+	 * return new ResponseEntity<>(e.getMessage(), e.getStatus()); } }
+	 */
 	@JsonView(View.AuthenticateInfo.class)
 	@GetMapping(value = "/userSummary/{id}")
 	public Optional<AppUserEntity> getUserSummart(@PathVariable int id) {
@@ -79,12 +78,19 @@ public class AppUserController {
 //        }
 //    }
 
+	
 	@RequestMapping(value = "/Add", method = RequestMethod.POST)
 	public ResponseEntity<?> svae(@RequestBody UserRegisterationDto dto) {
+		ReturnedResultModel r= new ReturnedResultModel();
 		try {
-			return usersService.save(dto);
+			r = usersService.save(dto);
+			return ResponseEntity.status(r.getStatus()).body(r);
 		} catch (ResponseStatusException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getStatus());
+			r.setError(e.getMessage());
+			r.setStatus(e.getStatus());
+			r.setResult(null);
+			r.setMessage("Failed");
+			return ResponseEntity.status(r.getStatus()).body(r);
 		}
 	}
 

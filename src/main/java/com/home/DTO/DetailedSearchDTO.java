@@ -31,7 +31,6 @@ public class DetailedSearchDTO {
 	private String accountType;
 	private List<AppUserEntity> appUserEntities;
 	private List<AppUser> appUsers;
-	
 	private AppUser appUser;
 	private Address address;
 

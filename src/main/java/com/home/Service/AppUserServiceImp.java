@@ -29,6 +29,7 @@ import com.home.Repository.AccountTypeRepository;
 import com.home.Repository.AppUserRepository;
 import com.home.Repository.AreasRepository;
 import com.home.Repository.LocationRepository;
+import com.home.Repository.PhoneRepository;
 import com.home.Repository.ShopRepository;
 import com.home.Repository.SpecializationRepository;
 import com.home.Repository.UserRoleRepository;
@@ -36,9 +37,11 @@ import com.home.entities.AccountTypeEntity;
 import com.home.entities.AppUserEntity;
 import com.home.entities.AreasEntity;
 import com.home.entities.LocationEntity;
+import com.home.entities.PhoneEntity;
 import com.home.entities.ShopEntity;
 import com.home.entities.SpecializationEntity;
 import com.home.entities.UserRoleEntity;
+import com.home.util.ReturnedResultModel;
 
 @Service
 public class AppUserServiceImp implements AppUserService {
@@ -60,6 +63,10 @@ public class AppUserServiceImp implements AppUserService {
 	@Autowired
 	SpecializationRepository specializationRepository;
 
+	@Autowired
+	PhoneRepository phoneRepository;
+
+	
 	@Override
 	public int deleteUser(int id) {
 		// TODO Auto-generated method stub
@@ -102,13 +109,15 @@ public class AppUserServiceImp implements AppUserService {
 	}
 
 	@Override
-	public ResponseEntity<?> save(UserRegisterationDto userDto) {
+	public ReturnedResultModel save(UserRegisterationDto userDto) {
+		ReturnedResultModel r= new ReturnedResultModel();
 		AreasEntity areaEntity = userDto.getAreasEntity();
 		AppUserEntity appUserEntity = userDto.getAppUserEntity();
 		ShopEntity shopEntityone = userDto.getShopEntity();
 		SpecializationEntity specializationEntity = userDto.getSpecializationEntity();
 		AccountTypeEntity accountTypeEntity = userDto.getAccountTypeEntity();
 		LocationEntity locationEntity = userDto.getLocationEntity();
+		PhoneEntity phoneEntity = userDto.getPhoneEntity();
 
 		if (appUserEntity != null) {
 			UserRoleEntity ure = null;
@@ -119,7 +128,13 @@ public class AppUserServiceImp implements AppUserService {
 				appUserEntity.setUserRoleByUserRoleId(ure);
 				appUserEntity.setUserRoleByUserRoleId(ure);
 				appUserEntity = appUsersRepository.save(appUserEntity);
+
 				if (areaEntity == null) {
+					/*
+					 * r.setError("you should enter your area");
+					 * r.setStatus(HttpStatus.INTERNAL_SERVER_ERROR); r.setResult(null);
+					 * r.setMessage("Failed"); return ResponseEntiot
+					 */
 					throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "you should enter your area");
 				} else {
 
@@ -133,9 +148,11 @@ public class AppUserServiceImp implements AppUserService {
 						if (locationEntity.getLocationName() == null) {
 							throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
 									"you should enter your location name");
-						} else {
-							LocationEntity locationEnt = locationRepository.save(locationEntity);
+						}
 
+						else {
+							locationRepository.save(locationEntity);
+						
 							ShopEntity shopEntity = new ShopEntity();
 							if (accountTypeEntity != null)
 
@@ -162,29 +179,50 @@ public class AppUserServiceImp implements AppUserService {
 									shopEntity.setStartDate(shopEntityone.getStartDate());
 									shopEntity.setStreet(shopEntityone.getStreet());
 								}
+							if (phoneEntity != null) {
+								phoneEntity = phoneRepository.save(phoneEntity);
+
+							} else {
+
+								throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+										"you should enter your phone");
+
+							}
+
 							shopEntity.setUserId(appUserEntity.getId());
 							shopEntity.setAccountTypeId(accountTypeEntity.getId());
-							//shopEntity.setSpecializationId(specializationEntity.getId());
+							// shopEntity.setSpecializationId(specializationEntity.getId());
 							shopEntity.setLocationId(locationEntity.getId());
-							
-							shopRepository.save(shopEntity);
+							shopEntity.setPhoneId(phoneEntity.getId());
+							shopRepository.save(shopEntity); 
 						}
-						
-					}
-				
-				}
-			
-			}
-			
-		}
-		throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-				"you should enter your location");
 
+					}
+
+				}
+
+			}
+ 
+			
+		}else {	
+			
+			/*r.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+			r.setError("you should enter your appuser");
+			return new ResponseEntity<>(r.getStatus());*/
+			
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"you should enter your user");
+		}
+		//r.getMessage();
+		r.setMessage("user saved succcessfullty");
+		r.setStatus(HttpStatus.OK);
+		return r;
+//		return ResponseEntity.ok("user saved successfully");
+		
 	}
 
 	public SpecializationEntity checkSpecializationType(SpecializationEntity specializationEntity) {
 
-		SpecializationEntity entity= new SpecializationEntity();
+		SpecializationEntity entity = new SpecializationEntity();
 		if (specializationEntity.getSpecializationName().equals("سباك")) {
 			entity = specializationRepository.findBySpecializationName("سباك");
 		}
@@ -194,11 +232,10 @@ public class AppUserServiceImp implements AppUserService {
 		if (specializationEntity.getSpecializationName().equals("سيراميك")) {
 			entity = specializationRepository.findBySpecializationName("سيراميك");
 		}
-		
+
 		return entity;
 
 	}
-
 
 	@Override
 	public List<AppUser> searchAll(String areaName, String accountType, String specializationName,
@@ -264,28 +301,25 @@ public class AppUserServiceImp implements AppUserService {
 		return dtot;
 	}
 
-	@Override
-	public ResponseEntity<?> add(UserRegisterationDto dto) {
-		AppUserEntity appUserEntity = dto.getAppUserEntity();
-		if (appUserEntity != null) {
-			if (appUserEntity.getPassword().length() < 8) {
-				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Please enter the secret number 8");
-			}
+	/*
+	 * @Override public ResponseEntity<?> add(UserRegisterationDto dto) {
+	 * AppUserEntity appUserEntity = dto.getAppUserEntity(); if (appUserEntity !=
+	 * null) { if (appUserEntity.getPassword().length() < 8) { throw new
+	 * ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+	 * "Please enter the secret number 8"); }
+	 * 
+	 * if (appUserEntity.getUserMobile().length() < 11) { throw new
+	 * ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+	 * "Please enter the phone number"); }
+	 * 
+	 * appUserEntity = appUsersRepository.save(appUserEntity); } return null;
+	 * 
+	 * }
+	 */
 
-			if (appUserEntity.getUserMobile().length() < 11) {
-				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Please enter the phone number");
-			}
-
-			appUserEntity = appUsersRepository.save(appUserEntity);
-		}
-		return null;
-
-	}
-
-	@Override
-	public int saveone(AppUserEntity appUserEntity) {
-		// TODO Auto-generated method stub
-		appUsersRepository.save(appUserEntity);
-		return 0;
-	}
+	/*
+	 * @Override public int saveone(AppUserEntity appUserEntity) { // TODO
+	 * Auto-generated method stub appUsersRepository.save(appUserEntity); return 0;
+	 * }
+	 */
 }

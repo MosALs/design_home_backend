@@ -4,6 +4,7 @@ import com.home.entities.AccountTypeEntity;
 import com.home.entities.AppUserEntity;
 import com.home.entities.AreasEntity;
 import com.home.entities.LocationEntity;
+import com.home.entities.PhoneEntity;
 import com.home.entities.ShopEntity;
 import com.home.entities.SpecializationEntity;
 import com.home.entities.UserRoleEntity;
@@ -18,6 +19,7 @@ public class UserRegisterationDto {
 	private ShopEntity shopEntity;
 	private AreasEntity areasEntity;
 	private AccountTypeEntity accountTypeEntity;
+	private PhoneEntity phoneEntity;
 	
 	public AccountTypeEntity getAccountTypeEntity() {
 		return accountTypeEntity;
@@ -76,6 +78,15 @@ public class UserRegisterationDto {
 	public void setAreasEntity(AreasEntity areasEntity) {
 		this.areasEntity = areasEntity;
 	}
+
+	public PhoneEntity getPhoneEntity() {
+		return phoneEntity;
+	}
+
+	public void setPhoneEntity(PhoneEntity phoneEntity) {
+		this.phoneEntity = phoneEntity;
+	}
+	
 	
 	
 

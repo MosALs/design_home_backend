@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +29,10 @@ public class ShopEntity {
     private Boolean active;
     private Date startDate;
     private Integer accountTypeId;
+    private String wholeRetailSale;
+    private String deliveryNoDelivery;
+    private Integer phoneId;
+    private PhoneEntity phoneByPhoneId;
     private AppUserEntity appUserByUserId;
     private SpecializationEntity specializationBySpecializationId;
     private LocationEntity locationByLocationId;
@@ -116,6 +121,28 @@ public class ShopEntity {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+    
+    
+
+    @Basic
+    @Column(name = "whole_retail_sale")
+    public String getWholeRetailSale() {
+        return wholeRetailSale;
+    }
+
+    public void setWholeRetailSale(String wholeRetailSale) {
+        this.wholeRetailSale = wholeRetailSale;
+    }
+
+    @Basic
+    @Column(name = "delivery_no_delivery")
+    public String getDeliveryNoDelivery() {
+        return deliveryNoDelivery;
+    }
+
+    public void setDeliveryNoDelivery(String deliveryNoDelivery) {
+        this.deliveryNoDelivery = deliveryNoDelivery;
+    }
 
     @Basic
     @Column(name = "account_type_id")
@@ -126,8 +153,19 @@ public class ShopEntity {
     public void setAccountTypeId(Integer accountTypeId) {
         this.accountTypeId = accountTypeId;
     }
+    
+    
+    @Basic
+    @Column(name = "phone_id")
+	public Integer getPhoneId() {
+		return phoneId;
+	}
 
-    @Override
+	public void setPhoneId(Integer phoneId) {
+		this.phoneId = phoneId;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -140,14 +178,32 @@ public class ShopEntity {
                 Objects.equals(street, that.street) &&
                 Objects.equals(active, that.active) &&
                 Objects.equals(startDate, that.startDate) &&
-                Objects.equals(accountTypeId, that.accountTypeId);
+                Objects.equals(accountTypeId, that.accountTypeId)&&
+                Objects.equals(wholeRetailSale,that.wholeRetailSale )&&
+                Objects.equals(deliveryNoDelivery, that.deliveryNoDelivery)&&
+                Objects.equals(phoneId,that.phoneId )
+                ;
+        
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, shopName, specializationId, locationId, street, active, startDate, accountTypeId);
+        return Objects.hash(id, userId, shopName, specializationId, locationId
+        		, street, active, startDate, accountTypeId, phoneId,wholeRetailSale,deliveryNoDelivery);
+    }
+    
+    
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="phone_id",referencedColumnName = "id",insertable=false ,updatable=false)
+    public PhoneEntity getPhoneByPhoneId() {
+    	return phoneByPhoneId;
     }
 
+    public void setPhoneByPhoneId(PhoneEntity phoneByphoneId) {
+        this.phoneByPhoneId = phoneByphoneId;
+    }
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public AppUserEntity getAppUserByUserId() {
@@ -211,12 +267,19 @@ public class ShopEntity {
 	public String toString() {
 		return "ShopEntity [id=" + id + ", userId=" + userId + ", shopName=" + shopName + ", specializationId="
 				+ specializationId + ", locationId=" + locationId + ", street=" + street + ", active=" + active
-				+ ", startDate=" + startDate + ", accountTypeId=" + accountTypeId + ", appUserByUserId="
-				+ appUserByUserId + ", specializationBySpecializationId=" + specializationBySpecializationId
-				+ ", locationByLocationId=" + locationByLocationId + ", accountTypeByAccountTypeId="
-				+ accountTypeByAccountTypeId + ", shopProductsById=" + shopProductsById + ", workOrdersById="
-				+ workOrdersById + "]";
+				+ ", startDate=" + startDate + ", accountTypeId=" + accountTypeId + ", wholeRetailSale="
+				+ wholeRetailSale + ", deliveryNoDelivery=" + deliveryNoDelivery + ", phoneId=" + phoneId
+				+ ", phoneByPhoneId=" + phoneByPhoneId + ", appUserByUserId=" + appUserByUserId
+				+ ", specializationBySpecializationId=" + specializationBySpecializationId + ", locationByLocationId="
+				+ locationByLocationId + ", accountTypeByAccountTypeId=" + accountTypeByAccountTypeId
+				+ ", shopProductsById=" + shopProductsById + ", workOrdersById=" + workOrdersById + "]";
 	}
+
+
+	
+
+	
+
     
     
 }

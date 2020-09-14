@@ -37,15 +37,10 @@ public class AppUserEntity {
     private String userHours;
     @JsonView(View.SearchCriteriaInfo.class)
     private String userGender;
-    private String tradeName;
-    private String tradeMobileNumber;
-    private String wholeRetailSale;
-    private String deliveryNoDelivery;
     private String websiteLink;
     @JsonView(View.AuthenticateInfo.class)
     private String password;
 //    @JsonView(View.AuthenticateInfo.class)
-    private boolean active;
 //    private int userRoleId;
     private String facbookLink;
     @JsonView(View.AuthenticateInfo.class)
@@ -126,47 +121,6 @@ public class AppUserEntity {
         this.userGender = userGender;
     }
 
-
-    @Basic
-    @Column(name = "trade_name")
-    public String getTradeName() {
-        return tradeName;
-    }
-
-    public void setTradeName(String tradeName) {
-        this.tradeName = tradeName;
-    }
-
-    @Basic
-    @Column(name = "trade_mobile_number")
-    public String getTradeMobileNumber() {
-        return tradeMobileNumber;
-    }
-
-    public void setTradeMobileNumber(String tradeMobileNumber) {
-        this.tradeMobileNumber = tradeMobileNumber;
-    }
-
-    @Basic
-    @Column(name = "whole_retail_sale")
-    public String getWholeRetailSale() {
-        return wholeRetailSale;
-    }
-
-    public void setWholeRetailSale(String wholeRetailSale) {
-        this.wholeRetailSale = wholeRetailSale;
-    }
-
-    @Basic
-    @Column(name = "delivery_no_delivery")
-    public String getDeliveryNoDelivery() {
-        return deliveryNoDelivery;
-    }
-
-    public void setDeliveryNoDelivery(String deliveryNoDelivery) {
-        this.deliveryNoDelivery = deliveryNoDelivery;
-    }
-
     @Basic
     @Column(name = "website_link")
     public String getWebsiteLink() {
@@ -187,15 +141,6 @@ public class AppUserEntity {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "active")
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 
 //    @Basic
 //    @Column(name = "user_role_id")
@@ -223,7 +168,6 @@ public class AppUserEntity {
         if (o == null || getClass() != o.getClass()) return false;
         AppUserEntity that = (AppUserEntity) o;
         return id == that.id &&
-                active == that.active &&
 //                userRoleId == that.userRoleId &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(userName, that.userName) &&
@@ -231,10 +175,6 @@ public class AppUserEntity {
                 Arrays.equals(userImage, that.userImage) &&
                 Objects.equals(userHours, that.userHours) &&
                 Objects.equals(userGender, that.userGender) &&
-                Objects.equals(tradeName, that.tradeName) &&
-                Objects.equals(tradeMobileNumber, that.tradeMobileNumber) &&
-                Objects.equals(wholeRetailSale, that.wholeRetailSale) &&
-                Objects.equals(deliveryNoDelivery, that.deliveryNoDelivery) &&
                 Objects.equals(websiteLink, that.websiteLink) &&
                 Objects.equals(password, that.password) &&
                 Objects.equals(facbookLink, that.facbookLink);
@@ -242,7 +182,7 @@ public class AppUserEntity {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, userName, userMobile, userHours, userGender, tradeName, tradeMobileNumber, wholeRetailSale, deliveryNoDelivery, websiteLink, password, active, facbookLink);
+        int result = Objects.hash(id, name, userName, userMobile, userHours, userGender, websiteLink, password, facbookLink);
         result = 31 * result + Arrays.hashCode(userImage);
         return result;
     }
@@ -280,12 +220,13 @@ public class AppUserEntity {
 	public String toString() {
 		return "AppUserEntity [id=" + id + ", name=" + name + ", userName=" + userName + ", userMobile=" + userMobile
 				+ ", userImage=" + Arrays.toString(userImage) + ", userHours=" + userHours + ", userGender="
-				+ userGender + ", tradeName=" + tradeName + ", tradeMobileNumber=" + tradeMobileNumber
-				+ ", wholeRetailSale=" + wholeRetailSale + ", deliveryNoDelivery=" + deliveryNoDelivery
-				+ ", websiteLink=" + websiteLink + ", password=" + password + ", active=" + active + ", facbookLink="
-				+ facbookLink + ", userRoleByUserRoleId=" + userRoleByUserRoleId + ", shopsById=" + shopsById
-				+ ", workOrdersById=" + workOrdersById + "]";
+				+ userGender + ", websiteLink=" + websiteLink + ", password=" + password + ", facbookLink=" + facbookLink + ", userRoleByUserRoleId=" + userRoleByUserRoleId + ", shopsById="
+				+ shopsById + ", workOrdersById=" + workOrdersById + "]";
 	}
+
+
+    
+
     
 
 	

@@ -22,7 +22,6 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(AppUserEntity appUser){
         this.userName = appUser.getUserName();
         this.password = appUser.getPassword();
-        this.active = appUser.isActive();
 //        this.roles = Arrays.stream(appUser.getUserRoleByUserRoleId())
 //                .map(SimpleGrantedAuthority::new)
 //                .collect(Collectors.toList());
