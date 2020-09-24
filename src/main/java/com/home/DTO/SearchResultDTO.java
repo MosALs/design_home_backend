@@ -12,5 +12,6 @@ public interface SearchResultDTO {
 	public String getAccount_Type();
 
 	public String getUser_Mobile();
+	
 
 }

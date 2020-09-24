@@ -1,30 +1,32 @@
 package com.home.Repository;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.home.DTO.SearchDtoNew;
+import com.home.DTO.ShopSearch;
 import com.home.entities.ShopEntity;
 
 
 
 @Repository
-public interface ShopRepository extends JpaRepository<ShopEntity,Integer>{
-	
-	@Modifying()
-	// اى حاجه تحصل مع الداتا بيز
-	@Transactional
-	@Query(value = "INSERT INTO dbo.shop\r\n" + 
-			"                         (user_id, shop_name, specialization_id, account_type_id, street, active, start_date, location_id)\r\n" + 
-			"SELECT        1 AS Expr1, 2 AS Expr2, 3 AS Expr3, 4 AS Expr4, 5 AS Expr5, 6 AS Expr6, 7 AS Expr7, 8 AS Expr8\r\n" + 
-			"\r\n" + 
-			"\r\n" + 
-			"", nativeQuery = true)
-	   int updateShop();
+public interface ShopRepository extends JpaRepository<ShopEntity,Integer>,JpaSpecificationExecutor {
 
+	@Query(value ="	select sh.user_id,auser.user_name, sh.shop_name,l.location_name,a.area_name\r\n" + 
+			"			from shop sh\r\n" + 
+			"		    inner join location l on sh.location_id=l.id\r\n" + 
+			"			inner join areas a on l.area_id=a.id\r\n" + 
+			"			inner join app_user auser on sh.user_id=auser.id\r\n" + 
+			"			 where a.area_name= :area_name;",nativeQuery = true)
+        	List<SearchDtoNew> search(@Param("area_name") String areaName);
+	
+
+	
 	void findByShopName(String shopName);
 
 }

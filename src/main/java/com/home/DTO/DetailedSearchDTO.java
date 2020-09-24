@@ -4,8 +4,9 @@ import java.util.List;
 
 import com.home.Entity.Address;
 import com.home.Entity.AppUser;
-import com.home.Entity.Specialization;
 import com.home.entities.AppUserEntity;
+import com.home.entities.LocationEntity;
+import com.home.entities.ShopEntity;
 
 public class DetailedSearchDTO {
 
@@ -29,19 +30,18 @@ public class DetailedSearchDTO {
 	private String areaName;
 	private String governorateName;
 	private String accountType;
-	private List<AppUserEntity> appUserEntities;
+	
+	private List<AppUserEntity> appUserEntitiesList;
 	private List<AppUser> appUsers;
+	private AppUserEntity appUserEntity;
 	private AppUser appUser;
 	private Address address;
+	private LocationEntity locationEntity;
+	
+	private ShopEntity shopEntity;
+	private List <ShopEntity> shopEntityList;
 
 
-	public List<AppUserEntity> getAppUserEntities() {
-		return appUserEntities;
-	}
-
-	public void setAppUserEntities(List<AppUserEntity> appUserEntities) {
-		this.appUserEntities = appUserEntities;
-	}
 
 	public String getAccountType() {
 		return accountType;
@@ -85,6 +85,46 @@ public class DetailedSearchDTO {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	public AppUserEntity getAppUserEntity() {
+		return appUserEntity;
+	}
+
+	public void setAppUserEntity(AppUserEntity appUserEntity) {
+		this.appUserEntity = appUserEntity;
+	}
+
+	public LocationEntity getLocationEntity() {
+		return locationEntity;
+	}
+
+	public void setLocationEntity(LocationEntity locationEntity) {
+		this.locationEntity = locationEntity;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+	public List<AppUserEntity> getAppUserEntitiesList() {
+		return appUserEntitiesList;
+	}
+	public void setAppUserEntitiesList(List<AppUserEntity> appUserEntitiesList) {
+		this.appUserEntitiesList = appUserEntitiesList;
+	}
+	public ShopEntity getShopEntity() {
+		return shopEntity;
+	}
+	public void setShopEntity(ShopEntity shopEntity) {
+		this.shopEntity = shopEntity;
+	}
+	public List<ShopEntity> getShopEntityList() {
+		return shopEntityList;
+	}
+	public void setShopEntityList(List<ShopEntity> shopEntityList) {
+		this.shopEntityList = shopEntityList;
+	}
+	
+	
 
 	
 	

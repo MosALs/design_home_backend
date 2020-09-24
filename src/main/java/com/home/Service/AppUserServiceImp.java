@@ -250,6 +250,8 @@ public class AppUserServiceImp implements AppUserService {
 		@SuppressWarnings("unchecked")
 		List<AppUser> appUsers = appUsersRepository.findAll(new Specification<AppUser>() {
 			private static final long serialVersionUID = 1L;
+			
+		
 
 			@Override
 			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {

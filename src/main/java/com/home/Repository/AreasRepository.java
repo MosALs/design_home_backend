@@ -15,10 +15,11 @@ import com.home.entities.AreasEntity;
 @Repository
 public interface AreasRepository extends JpaRepository<AreasEntity, Integer> {
 	
-	List<AreasEntity> findByGovernoratId(int governoratId);
+	//List<AreasEntity> findByGovernoratId(int governoratId);
 
 	AreasEntity findByAreaName(String areaName);
 
+	
 	@Modifying()
 	@Transactional
 	@Query(value = "UPDATE Areas a SET a.areaName=:newAreaName WHERE a.areaName=:oldAreaName")

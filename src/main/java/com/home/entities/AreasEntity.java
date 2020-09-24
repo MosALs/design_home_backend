@@ -1,17 +1,25 @@
 package com.home.entities;
 
-import com.fasterxml.jackson.annotation.*;
-
-import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "areas", schema = "dbo", catalog = "kmgnew")
 public class AreasEntity {
     private int id;
     private String areaName;
-    private Integer governoratId;
+    //private Integer governoratId;
     private GovernoratEntity governoratByGovernoratId;
     private List<LocationEntity> locationsById;
 
@@ -35,28 +43,26 @@ public class AreasEntity {
         this.areaName = areaName;
     }
 
-    @Column(name = "governorat_id")
-    public Integer getGovernoratId() {
-        return governoratId;
-    }
-
-    public void setGovernoratId(Integer governoratId) {
-        this.governoratId = governoratId;
-    }
-
+	/*
+	 * @Column(name = "governorat_id") public Integer getGovernoratId() { return
+	 * governoratId; }
+	 * 
+	 * public void setGovernoratId(Integer governoratId) { this.governoratId =
+	 * governoratId; }
+	 */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AreasEntity that = (AreasEntity) o;
         return id == that.id &&
-                Objects.equals(areaName, that.areaName) &&
-                Objects.equals(governoratId, that.governoratId);
+                Objects.equals(areaName, that.areaName)  ;
+               // Objects.equals(governoratId, that.governoratId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, areaName, governoratId);
+        return Objects.hash(id, areaName); //governoratId);
     }
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
@@ -77,4 +83,12 @@ public class AreasEntity {
     public void setLocationsById(List<LocationEntity> locationsById) {
         this.locationsById = locationsById;
     }
+
+	@Override
+	public String toString() {
+		return "AreasEntity [id=" + id + ", areaName=" + areaName + ", governoratByGovernoratId="
+				+ governoratByGovernoratId + ", locationsById=" + locationsById + "]";
+	}
+    
+    
 }

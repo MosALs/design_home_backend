@@ -21,10 +21,10 @@ public class AreasServiceImp implements AreasService {
 		return areasRepository.findAll();
 	}
 
-	@Override
-	public List<AreasEntity> getAreasByGovernorateId(int governoratId) {
-		return areasRepository.findByGovernoratId(governoratId);
-	}
+	/*
+	 * @Override public List<AreasEntity> getAreasByGovernorateId(int governoratId)
+	 * { return areasRepository.findByGovernoratId(governoratId); }
+	 */
 
 	@Override
 	public AreasEntity getAreaByName(String areaName) {

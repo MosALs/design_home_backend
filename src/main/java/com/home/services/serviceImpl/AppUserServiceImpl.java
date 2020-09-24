@@ -94,7 +94,7 @@ public class AppUserServiceImpl implements AppUserService {
 
 
 
-        dtot.setAppUserEntities(appUsers);
+      //  dtot.setAppUserEntity(appUserEntity);
         return dtot;
     }
 

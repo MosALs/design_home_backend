@@ -34,10 +34,11 @@ public class AreasController {
 		return areasService.getAreaByName(areaName);
 	}
 
-	@GetMapping(value = "/govId/{governrateId}")
-	List<AreasEntity> getAreasByGovernorateId(@PathVariable int governrateId) {
-		return areasService.getAreasByGovernorateId(governrateId);
-	}
+	/*
+	 * @GetMapping(value = "/govId/{governrateId}") List<AreasEntity>
+	 * getAreasByGovernorateId(@PathVariable int governrateId) { return
+	 * areasService.getAreasByGovernorateId(governrateId); }
+	 */
 //
 
 //

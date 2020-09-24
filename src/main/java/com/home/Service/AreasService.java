@@ -17,7 +17,7 @@ public interface AreasService {
 
 	List<AreasEntity> getAll();
 
-	List<AreasEntity> getAreasByGovernorateId(int governrateId);
+	//List<AreasEntity> getAreasByGovernorateId(int governrateId);
 
 	AreasEntity getAreaByName(String areaName);
 

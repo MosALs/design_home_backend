@@ -5,7 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.home.DTO.Location_AreaDTO;
+import com.home.DTO.SearchDtoNew;
+import com.home.DTO.SearchGetAll;
+import com.home.DTO.ShopSearch;
 import com.home.entities.LocationEntity;
+import com.home.entities.ShopEntity;
 
 
 @Service
@@ -25,5 +29,16 @@ public interface LocationService {
 	void deleteByLocationID(int id);
 
 	int ModifyByLocationName(String newlocationName, String oldlocationName);
+	
+	List <SearchDtoNew> searchAll(String areaName);
+
+	List <ShopSearch> searchAllnew(String areaName ,String  specializationName,String accountTypeName);
+
+	List <SearchGetAll> searchAllALL();
+	
+	List <SearchGetAll> searchAllALLtest();
+	
+	
+	
 
 }

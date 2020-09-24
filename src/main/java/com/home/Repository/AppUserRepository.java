@@ -24,7 +24,7 @@ public interface AppUserRepository extends JpaRepository<AppUserEntity, Integer>
 			+ "inner join specialization s on s.id=u.specialization_id\n"
 			+ "where a.area_name = :area_name  and u.account_type= :account_type and\n"
 			+ "s.specialization_name= :specialization_name", nativeQuery = true)
-	List<SearchResultDTO> search(@Param("area_name") String areaName, @Param("account_type") String accountType,
+	  List<SearchResultDTO> search(@Param("area_name") String areaName, @Param("account_type") String accountType,
 			@Param("specialization_name") String specializationName);
 
 	// بحث شامل
@@ -36,12 +36,17 @@ public interface AppUserRepository extends JpaRepository<AppUserEntity, Integer>
 	 * @Param("specialization_name") String
 	 * specializationName, @Param("governorat_name")String governoratName);
 	 */
-	@Transactional
-	@Procedure(procedureName = "selectAllUser")
-	List<AppUser> searchALL(@Param("area_name") String areaName, @Param("account_type") String accountType,
-			@Param("specialization_name") String specializationName, @Param("governorat_name") String governoratName);
-
+	
+	  @Transactional
+	 // Registration finishes
+	  @Procedure(procedureName = "selectAllUser") List<AppUser>
+	  searchALL(@Param("area_name") String areaName,
+			    @Param("account_type") String accountType,
+			    @Param("specialization_name") String specializationName,
+			    @Param("governorat_name") String governoratName);
+	 
 	// AppUser findByUserNameAndPassword(String userName, String password);
+	
 	AppUserEntity findByUserNameAndPassword(String userName, String password);
 
 	// AppUser findByUserMobileAndPassword(String userMobile, String password);

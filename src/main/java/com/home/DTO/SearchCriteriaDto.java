@@ -1,4 +1,4 @@
-package com.home.DTO;
+	package com.home.DTO;
 
 import com.home.Entity.AppUser;
 import com.home.Entity.Specialization;
@@ -10,7 +10,8 @@ public class SearchCriteriaDto {
 	private String governorateName;
 	private String account_Type;
 	
-
+		
+	public Specialization specialization;
 	private AppUser appUser;
 
 	
@@ -23,7 +24,7 @@ public class SearchCriteriaDto {
 		this.specialization = specialization;
 	}
 
-	public Specialization specialization;
+
 
 
 	
