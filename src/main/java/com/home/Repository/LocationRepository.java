@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +18,7 @@ import com.home.DTO.ShopSearch;
 import com.home.entities.LocationEntity;
 
 @Repository
-public interface LocationRepository extends JpaRepository<LocationEntity, Integer> {
+public interface LocationRepository extends JpaRepository<LocationEntity, Integer> ,JpaSpecificationExecutor{
 
 	@Query(value = " select l.location_name,a.area_name\r\n" + "\r\n"
 			+ " from location l inner join areas a on l.area_id=a.id", nativeQuery = true)

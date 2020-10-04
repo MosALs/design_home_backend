@@ -26,6 +26,7 @@ public class DetailedSearchDTO {
 	 * public String getName();
 	 */
 	
+	private String accountTypeName;
 	private String specializationName;
 	private String areaName;
 	private String governorateName;
@@ -38,6 +39,15 @@ public class DetailedSearchDTO {
 	private Address address;
 	private LocationEntity locationEntity;
 	
+	
+	
+	
+	public String getAccountTypeName() {
+		return accountTypeName;
+	}
+	public void setAccountTypeName(String accountTypeName) {
+		this.accountTypeName = accountTypeName;
+	}
 	private ShopEntity shopEntity;
 	private List <ShopEntity> shopEntityList;
 

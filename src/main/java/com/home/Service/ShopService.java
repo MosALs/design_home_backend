@@ -4,11 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.home.DTO.DetailedSearchDTO;
+import com.home.DTO.DetailedSearchDTONew;
 import com.home.DTO.SearchCriteriaDto;
-import com.home.DTO.SearchDtoNew;
-import com.home.DTO.ShopSearch;
-import com.home.Entity.AppUser;
 import com.home.entities.ShopEntity;
 @Service
 public interface ShopService {
@@ -28,5 +25,5 @@ public interface ShopService {
 	 //List<ShopEntity> searchAll(String areaName);
 
 	
-	DetailedSearchDTO findBySearchCriteria(SearchCriteriaDto caseCriteria);
+	//DetailedSearchDTONew findBySearchCriteria(DetailedSearchDTONew detailedSearchDTONew);
 }

@@ -1,5 +1,7 @@
 package com.home.util;
 
+import java.util.Objects;
+
 import org.springframework.http.HttpStatus;
 
 public class ReturnedResultModel {
@@ -8,7 +10,10 @@ public class ReturnedResultModel {
 	 private String message ;
 	 private String error ;
 	 private HttpStatus status ;
-	 private String result;
+//	 private Objects result;
+	 private Object  result;
+	 
+	 
 	public String getMessage() {
 		return message;
 	}
@@ -28,10 +33,10 @@ public class ReturnedResultModel {
 	public void setStatus(HttpStatus status) {
 		this.status = status;
 	}
-	public String getResult() {
+	public Object getResult() {
 		return result;
 	}
-	public void setResult(String result) {
+	public void setResult(Object result) {
 		this.result = result;
 	}
 
