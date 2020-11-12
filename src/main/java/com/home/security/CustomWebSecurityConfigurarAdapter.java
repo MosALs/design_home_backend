@@ -47,7 +47,7 @@ public class CustomWebSecurityConfigurarAdapter extends WebSecurityConfigurerAda
     protected void configure(HttpSecurity http) throws Exception {
         System.out.println("KMG == configure(HttpSecurity http)");
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate").permitAll()
+                .authorizeRequests().antMatchers("/authenticate","/rest/user/Add").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(customOncePerRequestFilter, UsernamePasswordAuthenticationFilter.class);

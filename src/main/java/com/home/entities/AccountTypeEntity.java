@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "account_type", schema = "dbo", catalog = "kmgnew")
 public class AccountTypeEntity {
@@ -51,6 +53,7 @@ public class AccountTypeEntity {
         return Objects.hash(id, accountTypeName);
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "accountTypeByAccountTypeId")
     public Collection<ShopEntity> getShopsById() {
         return shopsById;

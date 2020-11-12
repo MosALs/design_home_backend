@@ -4,12 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.home.DTO.Location_AreaDTO;
+import com.home.DTO.LocationAreaDTO;
 import com.home.DTO.SearchDtoNew;
 import com.home.DTO.SearchGetAll;
 import com.home.DTO.ShopSearch;
 import com.home.entities.LocationEntity;
-import com.home.entities.ShopEntity;
 
 
 @Service
@@ -20,7 +19,7 @@ public interface LocationService {
 	 List<LocationEntity> getAllLocation();
 
 	//استخدمها على شان الابلكيش يعرض العنوان الخاص لوحده بكل منطقه
-	List<Location_AreaDTO> getAllLocationNameByAreaName();
+	List<LocationAreaDTO> getAllLocationNameByAreaName();
 	
 	int getByLocationID(int id);
 	
@@ -37,6 +36,8 @@ public interface LocationService {
 	List <SearchGetAll> searchAllALL();
 	
 	List <SearchGetAll> searchAllALLtest();
+	
+	List<LocationEntity> getName();
 	
 	
 	

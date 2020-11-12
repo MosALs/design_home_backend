@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.home.DTO.SearchDtoNew;
-import com.home.DTO.ShopSearch;
 import com.home.entities.ShopEntity;
 
 
@@ -28,5 +27,12 @@ public interface ShopRepository extends JpaRepository<ShopEntity,Integer>,JpaSpe
 
 	
 	void findByShopName(String shopName);
+
+
+
+	ShopEntity findAllById(int id);
+	
+	ShopEntity findById(int id);
+	
 
 }

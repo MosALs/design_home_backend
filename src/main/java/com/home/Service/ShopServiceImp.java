@@ -67,14 +67,13 @@ public class ShopServiceImp implements ShopService {
 	@Override
 	public List<ShopEntity> getAllShop() {
         
-		shopRepository.findAll();
-		return null;
+		return shopRepository.findAll();
+	
 	}
 
 	@Override
-	public int getByShopID(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ShopEntity getByShopID(int id) {
+		return shopRepository.getOne(id);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.home.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -128,7 +129,7 @@ public class ShopProductEntity {
     public void setProductByProductId(ProductEntity productByProductId) {
         this.productByProductId = productByProductId;
     }
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "shop_id", referencedColumnName = "id",insertable=false ,updatable=false)
     public ShopEntity getShopByShopId() {

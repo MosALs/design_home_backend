@@ -1,6 +1,7 @@
 package com.home.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -63,6 +64,7 @@ public class GovernoratEntity {
         return Objects.hash(id, governoratName, countryId);
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "governoratByGovernoratId")
     public Collection<AreasEntity> getAreasById() {
         return areasById;
@@ -72,6 +74,7 @@ public class GovernoratEntity {
         this.areasById = areasById;
     }
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id",insertable= false , updatable= false)
     public CountriesEntity getCountriesByCountryId() {

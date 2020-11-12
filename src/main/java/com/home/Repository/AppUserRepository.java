@@ -52,6 +52,10 @@ public interface AppUserRepository extends JpaRepository<AppUserEntity, Integer>
 	// AppUser findByUserMobileAndPassword(String userMobile, String password);
 	AppUserEntity findByUserMobileAndPassword(String userMobile, String password);
 
-	Optional<AppUser> findByUserName(String userName);
+	//Optional<AppUser> findByUserName(String userName);
+
+	Optional<AppUserEntity> findByUserName(String userName);
+	@Query(value="select ap.userName from AppUserEntity ap")
+	List<AppUserEntity> findAllUserName();
 
 }

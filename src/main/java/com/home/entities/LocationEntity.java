@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "location", schema = "dbo", catalog = "kmgnew")
 public class LocationEntity {
@@ -67,6 +69,7 @@ public class LocationEntity {
 //        return Objects.hash(id, locationName, areaId);
 //    }
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id" , updatable= true,insertable = true)
     public AreasEntity getAreasByAreaId() {
@@ -77,6 +80,7 @@ public class LocationEntity {
         this.areasByAreaId = areasByAreaId;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "locationByLocationId" , fetch = FetchType.LAZY)
     public Collection<ShopEntity> getShopsById() {
         return shopsById;

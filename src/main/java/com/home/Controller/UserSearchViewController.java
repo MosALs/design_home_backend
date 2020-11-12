@@ -1,37 +1,29 @@
 package com.home.Controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.home.Repository.ShopRepository;
-import com.home.Service.ShopService;
+import com.home.Repository.UserSearchViewRepository;
+import com.home.Service.UserSearchViewService;
+import com.home.View.UserSearchView;
 import com.home.entities.ShopEntity;
 
 @RestController
-@RequestMapping(value = "rest/sh")
-public class ShopController {
+@RequestMapping(value="rest/usv")
+public class UserSearchViewController {
 
 	@Autowired
-	ShopService shopService;
+	UserSearchViewService UserSearchViewService;
 	@Autowired
-	ShopRepository shopRepository;
-
-	@GetMapping
-	List<ShopEntity> getAll() {
-		return shopService.getAllShop();
-	}
-
+	UserSearchViewRepository userSearchViewRepository; 
+	
 	// @PostMapping(value = "/{id}")
 	@GetMapping(value = "{id}")
-	ShopEntity getShopById(@PathVariable(value = "id") int id) {
+	UserSearchView getShopById(@PathVariable(value = "id") int id) {
 		
-		return shopRepository.findAllById(id);
-	}
-
+		return userSearchViewRepository.findAllById(id);
+}
 }

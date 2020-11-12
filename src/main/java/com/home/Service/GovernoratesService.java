@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.home.Entity.Governorates;
 import com.home.entities.GovernoratEntity;
 
 @Service

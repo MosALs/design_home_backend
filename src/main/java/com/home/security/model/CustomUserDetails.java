@@ -110,4 +110,5 @@ public class CustomUserDetails implements UserDetails {
     public void setRoles(List<GrantedAuthority> roles) {
         this.roles = roles;
     }
+
 }

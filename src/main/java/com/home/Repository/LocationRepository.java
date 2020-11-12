@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.home.DTO.Location_AreaDTO;
+import com.home.DTO.LocationAreaDTO;
 import com.home.DTO.SearchDtoNew;
 import com.home.DTO.SearchGetAll;
 import com.home.DTO.ShopSearch;
@@ -20,9 +20,10 @@ import com.home.entities.LocationEntity;
 @Repository
 public interface LocationRepository extends JpaRepository<LocationEntity, Integer> ,JpaSpecificationExecutor{
 
-	@Query(value = " select l.location_name,a.area_name\r\n" + "\r\n"
-			+ " from location l inner join areas a on l.area_id=a.id", nativeQuery = true)
-	List<Location_AreaDTO> findInfoLocationAndArea();
+	@Query(value = " select new com.home.DTO.LocationAreaDTO(l.locationName,a.areaName)\r\n" + "\r\n"
+			+ " from LocationEntity l inner join AreasEntity a on l.areasByAreaId.id=a.id")
+	List<LocationAreaDTO> findInfoLocationAndArea();
+	
 	/////////////
 
 	@Modifying()
@@ -92,6 +93,9 @@ public interface LocationRepository extends JpaRepository<LocationEntity, Intege
 			+ "\r\n" + "\r\n" + "\r\n" + "\r\n" + "")
 	     List<SearchGetAll> allFourDto1();
 	
+	@Query(value = "select l.locationName\r\n" +
+	"from LocationEntity l")
+	List<LocationEntity> findAllName();
 	
 	
 	

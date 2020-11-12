@@ -14,12 +14,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "areas", schema = "dbo", catalog = "kmgnew")
 public class AreasEntity {
     private int id;
     private String areaName;
     //private Integer governoratId;
+    
     private GovernoratEntity governoratByGovernoratId;
     private List<LocationEntity> locationsById;
 
@@ -65,6 +68,7 @@ public class AreasEntity {
         return Objects.hash(id, areaName); //governoratId);
     }
 
+    @JsonIgnore
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "governorat_id", referencedColumnName = "id" ,insertable= false , updatable= false)
     public GovernoratEntity getGovernoratByGovernoratId() {
@@ -75,6 +79,7 @@ public class AreasEntity {
         this.governoratByGovernoratId = governoratByGovernoratId;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "areasByAreaId",fetch = FetchType.LAZY)
     public List<LocationEntity> getLocationsById() {
         return locationsById;

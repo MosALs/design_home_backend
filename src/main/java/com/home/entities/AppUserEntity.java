@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.home.jsonfilter.View;
 @Entity
@@ -197,7 +198,7 @@ public class AppUserEntity {
     public void setUserRoleByUserRoleId(UserRoleEntity userRoleByUserRoleId) {
         this.userRoleByUserRoleId = userRoleByUserRoleId;
     }
-
+    @JsonIgnore
     @OneToMany(mappedBy = "appUserByUserId")
     public Collection<ShopEntity> getShopsById() {
         return shopsById;
@@ -206,7 +207,7 @@ public class AppUserEntity {
     public void setShopsById(Collection<ShopEntity> shopsById) {
         this.shopsById = shopsById;
     }
-
+    @JsonIgnore
     @OneToMany(mappedBy = "appUserByRequsetUserId")
     public Collection<WorkOrderEntity> getWorkOrdersById() {
         return workOrdersById;

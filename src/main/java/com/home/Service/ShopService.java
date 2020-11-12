@@ -14,7 +14,7 @@ public interface ShopService {
 
 	List<ShopEntity> getAllShop();
 
-	int getByShopID(int id);
+	ShopEntity getByShopID(int id);
 
 	int getByshopName(String shopName);
 

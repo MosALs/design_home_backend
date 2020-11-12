@@ -93,10 +93,4 @@ public class AppUserController {
 			return ResponseEntity.status(r.getStatus()).body(r);
 		}
 	}
-
-//	@RequestMapping(value = "/saveone", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public int add(@RequestBody AppUserEntity appUserEntity) {
-//			usersService.saveone(appUserEntity);
-//			return 0;
-//	}
 }

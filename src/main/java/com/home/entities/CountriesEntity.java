@@ -1,6 +1,9 @@
 package com.home.entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Collection;
 import java.util.Objects;
 
@@ -81,6 +84,7 @@ public class CountriesEntity {
         return Objects.hash(id, englishShort, arabicShort, englishFormal, arabicFormal);
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "countriesByCountryId")
     public Collection<GovernoratEntity> getGovernoratsById() {
         return governoratsById;

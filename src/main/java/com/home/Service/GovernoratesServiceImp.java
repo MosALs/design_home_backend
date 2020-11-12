@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.home.Entity.Governorates;
 import com.home.Repository.GovernoratesRepository;
 import com.home.entities.GovernoratEntity;
 
@@ -34,8 +33,8 @@ public class GovernoratesServiceImp implements GovernoratesService{
 
 	@Override
 	public List<GovernoratEntity> getAllGovernorates() {
-		governoratesRepository.findAll();
-		return null;
+		return governoratesRepository.findAll();
+		
 	}
 
 	@Override

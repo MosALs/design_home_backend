@@ -2,29 +2,23 @@ package com.home.Controller;
 
 import java.util.List;
 
-import com.home.entities.AreasEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.home.DTO.Governorates_AreasDTO;
-import com.home.Entity.Areas;
 import com.home.Service.AreasService;
+import com.home.entities.AreasEntity;
 
 @RestController
 @RequestMapping(value = "/rest/areas")
 public class AreasController {
 
-	
 	@Autowired
 	AreasService areasService;
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@GetMapping
 	List<AreasEntity> getAllAreas() {
 		return areasService.getAll();
 	}
@@ -72,5 +66,4 @@ public class AreasController {
 //	
 //	}
 
-	
-	}
+}

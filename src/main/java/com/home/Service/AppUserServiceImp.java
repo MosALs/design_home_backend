@@ -2,7 +2,10 @@ package com.home.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -41,6 +45,8 @@ import com.home.entities.PhoneEntity;
 import com.home.entities.ShopEntity;
 import com.home.entities.SpecializationEntity;
 import com.home.entities.UserRoleEntity;
+import com.home.security.Util.JwtUtil;
+import com.home.security.model.CustomUserDetails;
 import com.home.util.ReturnedResultModel;
 
 @Service
@@ -63,10 +69,15 @@ public class AppUserServiceImp implements AppUserService {
 	@Autowired
 	SpecializationRepository specializationRepository;
 
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	JwtUtil jwtUtil;
+
 	@Autowired
 	PhoneRepository phoneRepository;
 
-	
 	@Override
 	public int deleteUser(int id) {
 		// TODO Auto-generated method stub
@@ -108,9 +119,29 @@ public class AppUserServiceImp implements AppUserService {
 		}
 	}
 
+	private String validateUserName(String userName) {
+		if (userName.startsWith("01")) {
+			// this is mobile number 
+			if (userName.length() != 11) {
+				return "Username should be correct number with length 11 number";
+
+			}
+		} else {
+			// this is email
+			String regex = "^(.+)@(.+)$";
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher(userName);
+			if (!matcher.matches()) {
+				return "Username is not valid";
+			}
+
+		}
+		return "valid";
+	}
+
 	@Override
 	public ReturnedResultModel save(UserRegisterationDto userDto) {
-		ReturnedResultModel r= new ReturnedResultModel();
+		ReturnedResultModel r = new ReturnedResultModel();
 		AreasEntity areaEntity = userDto.getAreasEntity();
 		AppUserEntity appUserEntity = userDto.getAppUserEntity();
 		ShopEntity shopEntityone = userDto.getShopEntity();
@@ -118,8 +149,35 @@ public class AppUserServiceImp implements AppUserService {
 		AccountTypeEntity accountTypeEntity = userDto.getAccountTypeEntity();
 		LocationEntity locationEntity = userDto.getLocationEntity();
 		PhoneEntity phoneEntity = userDto.getPhoneEntity();
+		String jwt = "";
 
 		if (appUserEntity != null) {
+			if (appUserEntity.getUserName() != null && appUserEntity.getPassword() != null
+					&& !appUserEntity.getUserName().isEmpty() && !appUserEntity.getPassword().isEmpty()) {
+				String validUserName = this.validateUserName(appUserEntity.getUserName());
+				if (!validUserName.equals("valid")) {
+					r.setMessage(validUserName);
+					r.setError("Failed");
+					r.setResult("Failed To Register");
+					r.setStatus(HttpStatus.NOT_ACCEPTABLE);
+					return r;
+				}
+
+				Optional<AppUserEntity> appUserObj = appUsersRepository.findByUserName(appUserEntity.getUserName());
+				if (appUserObj.isPresent()) {
+					r.setMessage("This user name aleady exist, please enter a new one");
+					r.setError("Failed");
+					r.setResult("Failed To Register");
+					r.setStatus(HttpStatus.NOT_ACCEPTABLE);
+					return r;
+				}
+			} else {
+				r.setMessage("Username and password are required");
+				r.setError("Failed");
+				r.setResult("Failed To Register");
+				r.setStatus(HttpStatus.NOT_ACCEPTABLE);
+				return r;
+			}
 			UserRoleEntity ure = null;
 			if (accountTypeEntity != null) {
 				String accountTypeName = accountTypeEntity.getAccountTypeName();
@@ -152,7 +210,7 @@ public class AppUserServiceImp implements AppUserService {
 
 						else {
 							locationRepository.save(locationEntity);
-						
+
 							ShopEntity shopEntity = new ShopEntity();
 							if (accountTypeEntity != null)
 
@@ -194,7 +252,7 @@ public class AppUserServiceImp implements AppUserService {
 							// shopEntity.setSpecializationId(specializationEntity.getId());
 							shopEntity.setLocationId(locationEntity.getId());
 							shopEntity.setPhoneId(phoneEntity.getId());
-							shopRepository.save(shopEntity); 
+							shopRepository.save(shopEntity);
 						}
 
 					}
@@ -202,22 +260,32 @@ public class AppUserServiceImp implements AppUserService {
 				}
 
 			}
- 
-			
-		}else {	
-			
-			/*r.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-			r.setError("you should enter your appuser");
-			return new ResponseEntity<>(r.getStatus());*/
-			
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"you should enter your user");
+
+			CustomUserDetails userDetails = new CustomUserDetails();
+			userDetails.setUserName(appUserEntity.getUserName());
+			userDetails.setPassword(appUserEntity.getPassword());
+
+			jwt = jwtUtil.generateToken(userDetails);
+			r.setMessage("Succeeded, User saved successfully");
+			r.setResult(jwt);
+			r.setError("No Errors");
+			r.setStatus(HttpStatus.OK);
+
+		} else {
+
+			/*
+			 * r.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+			 * r.setError("you should enter your appuser"); return new
+			 * ResponseEntity<>(r.getStatus());
+			 */
+
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "you should enter your user");
 		}
-		//r.getMessage();
-		r.setMessage("user saved succcessfullty");
-		r.setStatus(HttpStatus.OK);
+		// r.getMessage();
+
 		return r;
 //		return ResponseEntity.ok("user saved successfully");
-		
+
 	}
 
 	public SpecializationEntity checkSpecializationType(SpecializationEntity specializationEntity) {
@@ -250,8 +318,6 @@ public class AppUserServiceImp implements AppUserService {
 		@SuppressWarnings("unchecked")
 		List<AppUser> appUsers = appUsersRepository.findAll(new Specification<AppUser>() {
 			private static final long serialVersionUID = 1L;
-			
-		
 
 			@Override
 			public Predicate toPredicate(Root<AppUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {

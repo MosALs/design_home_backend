@@ -16,7 +16,7 @@ public class AreasServiceImp implements AreasService {
 
 	@Override
 	public List<AreasEntity> getAll() {
-		System.out.println("asd");
+		System.out.println("Areas");
 
 		return areasRepository.findAll();
 	}

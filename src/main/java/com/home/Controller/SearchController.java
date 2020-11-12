@@ -1,16 +1,20 @@
 package com.home.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.tomcat.jni.Directory;
+import org.jsoup.select.Evaluator.IsEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +49,7 @@ public class SearchController {
 	LocationService locationService;
 	@Autowired
 	UserSearchViewService userSearchViewService;
-	
+
 	@Autowired
 	UserSearchViewRepository userSearchViewRepository;
 
@@ -183,29 +187,61 @@ public class SearchController {
 
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/result/Viewpage")
-	public ResponseEntity<?>  searchUserAllPage(@RequestBody UserSearchDto userSearchDto,@RequestParam int pageSize,int pageNumber
-			) {
-	 	//Pageable pageable = PageRequest.of(pageNumber, pageSize);
-	 	Pageable pageable = PageRequest.of(pageNumber, pageSize);
+	public ResponseEntity<?> searchUserAllPage(@RequestBody UserSearchDto userSearchDto,
+			@RequestParam Optional<Integer> pageSize, @RequestParam String pageNumber, @RequestParam String sortColumn,
+			@RequestParam String sortDirection) {
+
+		// add sorting
+		// Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		if (!pageSize.isPresent()) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Page size must exist");
+		}
+
+		if (pageSize.get() == 0) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Page size must not be less than one");
+		}
+		if(pageNumber.isEmpty() || pageNumber == null) {
+		
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("page Number must not be less than pageNumber");
+
+		}
+
+		if (sortColumn.isEmpty() || sortColumn == null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Page sortColumn must not be less than column");
+
+		}
+		if (sortDirection.isEmpty() || sortDirection == null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Page sortDirection must not be less than Direction");
+
+		}
+
+		System.out.println("direction: " + Direction.valueOf("ASC"));
+		System.out.println("direction: " + Direction.valueOf("DESC"));
+
+		Pageable pageable = PageRequest.of(Integer.parseInt(pageNumber), pageSize.get(),
+				Direction.valueOf(sortDirection), sortColumn);
+
 		// UserSearchDto Dto = new UserSearchDto();
 		userSearchDto.getAccountTypeName();
 		userSearchDto.getAreaName();
 		userSearchDto.getGovernoratName();
 		userSearchDto.getSpecializationName();
+		userSearchDto.getArabicShort();
 		// userSearchDto.getShopEntity().getSpecializationBySpecializationId().getSpecializationName();
 		return ResponseEntity.ok(userSearchViewService.findAllPage(userSearchDto, pageable));
 	}
-	
+
 // create PageableDTO {int pageSize , int pageNumber}
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/result/Viewpage1")
-	public ResponseEntity<?>  searchUserAllPage1(@RequestBody PageableDTO dto) {
-		
-		Pageable pageable = PageRequest.of(dto.getPageNumber(), dto.getPageSize());		
-		Page<UserSearchView> page =  userSearchViewRepository.findAll(pageable);
+	public ResponseEntity<?> searchUserAllPage1(@RequestBody PageableDTO dto) {
+
+		Pageable pageable = PageRequest.of(dto.getPageNumber(), dto.getPageSize());
+		Page<UserSearchView> page = userSearchViewRepository.findAll(pageable);
 		return ResponseEntity.ok(page);
 	}
-	
-
 
 }
